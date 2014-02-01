@@ -319,7 +319,12 @@ EnsembleFaits& EnsembleFaits::operator =(const EnsembleFaits& source)
 		return (*this);
 }
 
-
+/**
+ * \fn bool EnsembleFaits::operator = (const EnsembleFaits& source)
+ *
+ * \param[in] source une liste
+ * \return un type booleen
+ */
 bool EnsembleFaits::operator ==(const EnsembleFaits& source)
 {
 	int i;
@@ -333,6 +338,12 @@ bool EnsembleFaits::operator ==(const EnsembleFaits& source)
 	return false;
 }
 
+/**
+ * \fn bool EnsembleFaits::operator = (const EnsembleFaits& source)
+ *
+ * \param[in] source une liste
+ * \return un type booleen
+ */
 bool EnsembleFaits::operator != (const EnsembleFaits& source)
 {
 	int i;
