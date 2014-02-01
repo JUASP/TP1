@@ -1,13 +1,13 @@
 /**
 *  \file File.h
-*  \brief Classe définissant une file générique.
+*  \brief Classe dï¿½finissant une file gï¿½nï¿½rique.
 *  \author Mondher Bouden
 *  \version 0.1
-*  \date Février 2014
+*  \date Fï¿½vrier 2014
 *
-*  Cette classe définit l'interface d'une file.
-*  Cette file est implémentée avec une liste chaînée circulaire.
-*  Cette liste est générique.
+*  Cette classe dï¿½finit l'interface d'une file.
+*  Cette file est implï¿½mentï¿½e avec une liste chaï¿½nï¿½e circulaire.
+*  Cette liste est gï¿½nï¿½rique.
 */
 
 #ifndef FILE_H_
@@ -18,7 +18,7 @@
 /** 
 *  \namespace tp1
 *
-*  Espace de nommage regroupant les classes nécessaires pour le TP1.
+*  Espace de nommage regroupant les classes nï¿½cessaires pour le TP1.
 */
 namespace tp1
 {
@@ -26,9 +26,9 @@ namespace tp1
 	/** 
 	*  \class File
 	*
-	*  \brief Classe représentant une file générique.
+	*  \brief Classe reprï¿½sentant une file gï¿½nï¿½rique.
 	*
-	*  La classe gère une file générique à l'aide d'une liste chaînée circulaire.
+	*  La classe gï¿½re une file gï¿½nï¿½rique ï¿½ l'aide d'une liste chaï¿½nï¿½e circulaire.
 	*/
 	template<typename T>
 	class File
@@ -36,54 +36,54 @@ namespace tp1
 	public:
 
 		/**
-		*  \brief Constructeur par défaut
+		*  \brief Constructeur par dï¿½faut
 		*
-		*  \post Une instance vide de la classe File est initialisée.
+		*  \post Une instance vide de la classe File est initialisï¿½e.
 		*/
 		File();
 
 		/**                       
-		*  \brief Ajoute un élément à la fin de la file.
+		*  \brief Ajoute un ï¿½lï¿½ment ï¿½ la fin de la file.
 		* 
-		*  \pre Il y a assez de mémoire pour ajouter l'élément.
+		*  \pre Il y a assez de mï¿½moire pour ajouter l'ï¿½lï¿½ment.
 		*
-		*  \post ListeCirculaire comprend un élément de plus.
-		*  \post Sinon, ListeCirculaire est inchangée.
+		*  \post ListeCirculaire comprend un ï¿½lï¿½ment de plus.
+		*  \post Sinon, ListeCirculaire est inchangï¿½e.
 		* 
-		*  \exception bad_alloc s'il manque de mémoire.
+		*  \exception bad_alloc s'il manque de mï¿½moire.
 		*/
 		void enfiler(const T& contenu);
 
 		/**                       
-		*  \brief Retire l'élément au début de la file et le renvoie.
+		*  \brief Retire l'ï¿½lï¿½ment au dï¿½but de la file et le renvoie.
 		* 
 		*  \pre La file n'est pas vide.
 		*
-		*  \post ListeCirculaire comprend un élément de moins.
-		*  \post Sinon, ListeCirculaire est inchangée.
+		*  \post ListeCirculaire comprend un ï¿½lï¿½ment de moins.
+		*  \post Sinon, ListeCirculaire est inchangï¿½e.
 		* 
 		*  \exception logic_error si la file est vide.
 		*/
 		T defiler();
 
 		/**                       
-		*  \brief Retourne le nombre d'éléments de la file.
+		*  \brief Retourne le nombre d'ï¿½lï¿½ments de la file.
 		* 
 		*  \pre File est valide.
 		*
-		*  \post File est inchangée.
+		*  \post File est inchangï¿½e.
 		*/
 		unsigned int taille();
 
 		/**                       
 		*  \brief Affiche la file dans un flux de sortie.
-		*  \brief "Friend" pour permettre d'utiliser les données privées pour faire son travail.
+		*  \brief "Friend" pour permettre d'utiliser les donnï¿½es privï¿½es pour faire son travail.
 		* 
 		*  \pre File est valide.
 		*
-		*  \post File est inchangé.
+		*  \post File est inchangï¿½.
 		*
-		*	Ne pas toucher pas à cette méthode.
+		*	Ne pas toucher pas ï¿½ cette mï¿½thode.
 		*/
 		friend std::ostream& operator<<(std::ostream& os, const File<T>& file)
 		{
@@ -93,7 +93,7 @@ namespace tp1
 
 	private:
 
-		ListeCirculaire<T> liste;	//La file est implantée avec une liste circulaire.
+		ListeCirculaire<T> liste;	//La file est implantï¿½e avec une liste circulaire.
 	};
 
 }
