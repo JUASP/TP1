@@ -271,6 +271,80 @@ void EnsembleFaits::enleverPosEnsFaits(int position)
       cpt--;
 }
 
+/**
+ * \fn int EnsembleFaits:: positionEnsFaits(const T& fait) const
+ *
+ * \param[in] x l'�l�ment dont on cherche sa position
+ * \return la position de l'�l�ment
+ */
+int EnsembleFaits::positionEnsFaits(const TypeFait& source) const
+{
+	elem trouve = sommetG;
+	int pos = 1;
+
+	while (trouve != 0 && trouve->fait != source )
+	{
+		trouve = trouve->suivant;
+		pos++;
+	}
+	if (trouve== 0) throw std::logic_error("Position:L'element dont on cherche sa position n'est pas present dans la liste");
+
+	return pos;
+}
+
+/**
+ * \fn EnsembleFaits& EnsembleFaits:: operator = (const EnsembleFaits& source)
+ *
+ * \param[in] source La liste qu'on veut coper
+ * \return Une copie profonde de source
+ */
+EnsembleFaits& EnsembleFaits::operator =(const EnsembleFaits& source)
+{
+	if (sommetG!=0)
+			_detruire();
+
+		cpt = source.cpt;
+		elem temp;
+
+		if (source.cpt== 0)// la liste originale est vide
+		{
+			sommetG = 0;
+			sommetD = 0;
+		}
+		else
+		{
+			_copier(source.sommetG);
+		}  // fin if
+
+		return (*this);
+}
+
+
+bool EnsembleFaits::operator ==(const EnsembleFaits& source)
+{
+	int i;
+	for(i = 1; i <= cpt; i++)
+	{
+		if(source.elementEnsFaits(i) == this->elementEnsFaits(i))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool EnsembleFaits::operator != (const EnsembleFaits& source)
+{
+	int i;
+	for(i = 1; i <= cpt; i++)
+	{
+		if(source.elementEnsFaits(i) != this->elementEnsFaits(i))
+		{
+			return true;
+		}
+	}
+	return false;
+}
 
 /**
  * \fn Liste<T>:: _copier(Noeud * sn)
