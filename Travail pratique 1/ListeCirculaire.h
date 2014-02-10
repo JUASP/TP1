@@ -223,6 +223,13 @@ namespace tp1
 		elem dernier;	//Pour une liste circulaire, on utilise un pointeur sur le dernier élément de la liste.
 		int cpt;		//Cardinalité de la liste
 
+
+		//Methode privee
+	   /**
+	    *  \brief Detruire une liste
+	    */
+	   void  _detruire();
+
 	};	// Fermeture de la classe.
 
 }	// Fermeture du namespace.

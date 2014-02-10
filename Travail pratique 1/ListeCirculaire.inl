@@ -63,22 +63,13 @@ ListeCirculaire <T>:: ListeCirculaire(const ListeCirculaire& source)
 
    \brief destructeur de l'objet
    \pre recoit un Objet valide
-   \post L'objet a bel et bien été copier.
+   \post L'objet a bel et bien été détruit.
 
 */
 template <typename T>
 ListeCirculaire<T>:: ~ListeCirculaire()
 {
-   if(dernier !=0){
-      elem courant = dernier->suivant; // se positione au début
-      elem aSuprimmer = courant;
-      while(courant!=dernier){         // parcours la liste
-         courant=courant->suivant;     // se déplace dans la liste
-         delete aSuprimmer;            // supprime un élément
-         aSuprimmer=courant;
-       }// fin while
-       delete dernier;
-   }//fin if
+   _detruire();
 }// fin destructeur
 
 
@@ -97,11 +88,8 @@ ListeCirculaire<T>:: ~ListeCirculaire()
 template <typename T>
 ListeCirculaire<T>& ListeCirculaire<T>:: operator =(const ListeCirculaire<T>& source)
 {
-   //nettoyage
-   if(this != &source){
-         // On vide la liste actuel
-         delete this;
-   }// fin if
+
+   _detruire();//nettoyage
    if (source.dernier == 0){
       dernier = 0;  // la liste originale est vide
    }// fin if
@@ -455,6 +443,30 @@ int ListeCirculaire<T>::position(const T& element) const{
    }
 
    return i;// notre i est le compteur. Permet de donner la position.
+}
+
+
+
+/**
+  \fn void ListeCirculaire<T>:: _detruire()
+
+   \brief destructeur de l'objet
+   \pre recoit un Objet valide
+   \post L'objet a bel et bien été détruit.
+*/
+template <typename T>
+void ListeCirculaire<T>:: _detruire()
+{
+   if(dernier !=0){
+      elem courant = dernier->suivant; // se positione au début
+      elem aSuprimmer = courant;
+      while(courant!=dernier){         // parcours la liste
+         courant=courant->suivant;     // se déplace dans la liste
+         delete aSuprimmer;            // supprime un élément
+         aSuprimmer=courant;
+       }// fin while
+       delete dernier;
+   }//fin if
 }
 }// fin namespace
 
