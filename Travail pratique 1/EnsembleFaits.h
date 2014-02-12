@@ -1,13 +1,13 @@
 /**
 *  \file EnsembleFaits.h
-*  \brief Classe définissant un ensemble de faits.
+*  \brief Classe dï¿½finissant un ensemble de faits.
 *  \author Mondher Bouden
 *  \version 0.1
-*  \date Février 2014
+*  \date Fï¿½vrier 2014
 *
-*  Cette classe définit un ensemble de faits.
-*  Cet ensemble est implémenté avec une liste doublement chaînée.
-*  Chaque fait est une chaîne de caractères.
+*  Cette classe dï¿½finit un ensemble de faits.
+*  Cet ensemble est implï¿½mentï¿½ avec une liste doublement chaï¿½nï¿½e.
+*  Chaque fait est une chaï¿½ne de caractï¿½res.
 */
 
 #ifndef _ENSEMBLEFAITS_H
@@ -21,179 +21,179 @@
 /** 
 *  \namespace tp1
 *
-*  Espace de nommage regroupant les classes nécessaires pour le TP1.
+*  Espace de nommage regroupant les classes nï¿½cessaires pour le TP1.
 */
 namespace tp1
 {
 	/*! 
 	*  \typedef typedef string TypeFait
-	*  \brief TypeFait définit le type d'un fait. 
+	*  \brief TypeFait dï¿½finit le type d'un fait. 
 	*
-	*  Le type 'TypeFait' est utilisé pour définir un fait. Ce type contient simplement une chaîne de caractères.
+	*  Le type 'TypeFait' est utilisï¿½ pour dï¿½finir un fait. Ce type contient simplement une chaï¿½ne de caractï¿½res.
 	*/
 	typedef std::string TypeFait;
 
 	/** 
 	*  \class EnsembleFaits
 	*
-	*  \brief Classe représentant un ensemble de faits.
+	*  \brief Classe reprï¿½sentant un ensemble de faits.
 	*
-	*  La classe gère un ensemble de faits à l'aide d'une liste doublement chaînée.
+	*  La classe gï¿½re un ensemble de faits ï¿½ l'aide d'une liste doublement chaï¿½nï¿½e.
 	*/
 	class EnsembleFaits{
 
 	public:
 
 		/**
-		*  \brief Constructeur par défaut
+		*  \brief Constructeur par dï¿½faut
 		*
-		*  \post Une instance de la classe EnsembleFaits est initialisée.
+		*  \post Une instance de la classe EnsembleFaits est initialisï¿½e.
 		*/
 		EnsembleFaits();
 
 		/*!
 		*  \brief Constructeur de copie
 		*
-		*  \post Une copie profonde de l'ensemble de faits source est utilisée pour initialiser la nouvelle instance.
+		*  \post Une copie profonde de l'ensemble de faits source est utilisï¿½e pour initialiser la nouvelle instance.
 		*
-		*  \exception bad_alloc s'il manque de mémoire.
+		*  \exception bad_alloc s'il manque de mï¿½moire.
 		*/
 		EnsembleFaits(const EnsembleFaits&);
 
 		/**
 		*  \brief Destructeur
 		*
-		*  \post L'instance de EnsembleFaits est détruite.
+		*  \post L'instance de EnsembleFaits est dï¿½truite.
 		*/
 		~EnsembleFaits();
 
 		/**                       
-		*  \brief Ajoute un nouvel élément dans EnsembleFaits.
+		*  \brief Ajoute un nouvel ï¿½lï¿½ment dans EnsembleFaits.
 		* 
-		*  \pre Il y a assez de mémoire pour ajouter le fait.
+		*  \pre Il y a assez de mï¿½moire pour ajouter le fait.
 		*  \pre La position d'ajout est comprise entre 1 et |L|+1.
 		*
-		*  \post EnsembleFaits comprend un élément de plus.
-		*  \post Sinon, EnsembleFaits est inchangé.
+		*  \post EnsembleFaits comprend un ï¿½lï¿½ment de plus.
+		*  \post Sinon, EnsembleFaits est inchangï¿½.
 		* 
-		*  \exception range_error si la position est erronée.
-		*  \exception bad_alloc s'il manque de mémoire.
+		*  \exception range_error si la position est erronï¿½e.
+		*  \exception bad_alloc s'il manque de mï¿½moire.
 		*/
 		void ajouterEnsFaits(const TypeFait& fait, int position);
 
 		/**                       
-		*  \brief Enlève la première occurence d'un élément donné.
+		*  \brief Enlï¿½ve la premiï¿½re occurence d'un ï¿½lï¿½ment donnï¿½.
 		* 
-		*  \pre L'élément donné est compris dans l'ensemble.
+		*  \pre L'ï¿½lï¿½ment donnï¿½ est compris dans l'ensemble.
 		*
-		*  \post EnsembleFaits comprend un élément de moins.
-		*  \post Sinon, EnsembleFaits est inchangé.
+		*  \post EnsembleFaits comprend un ï¿½lï¿½ment de moins.
+		*  \post Sinon, EnsembleFaits est inchangï¿½.
 		* 
-		*  \exception logic_error si l'élément n'est pas présent dans la liste.
+		*  \exception logic_error si l'ï¿½lï¿½ment n'est pas prï¿½sent dans la liste.
 		*/
 		void enleverEl(const TypeFait&);
 
 		/**                       
-		*  \brief Enlève un élément à une position précise.
+		*  \brief Enlï¿½ve un ï¿½lï¿½ment ï¿½ une position prï¿½cise.
 		* 
-		*  \pre La position donnée est comprise entre 1 et |L|.
+		*  \pre La position donnï¿½e est comprise entre 1 et |L|.
 		*
-		*  \post EnsembleFaits comprend un élément de moins.
-		*  \post Sinon, EnsembleFaits est inchangé.
+		*  \post EnsembleFaits comprend un ï¿½lï¿½ment de moins.
+		*  \post Sinon, EnsembleFaits est inchangï¿½.
 		* 
-		*  \exception logic_error si l'ensemble est déjà vide.
+		*  \exception logic_error si l'ensemble est dï¿½jï¿½ vide.
 		*  \exception range_error si la position est hors borne.
 		*/
 		void enleverPosEnsFaits(int position);
 
 		/**                       
-		*  \brief Retourne le nombre d'éléments dans l'ensemble de faits.
+		*  \brief Retourne le nombre d'ï¿½lï¿½ments dans l'ensemble de faits.
 		*
-		*  \post EnsembleFaits est inchangé.
+		*  \post EnsembleFaits est inchangï¿½.
 		*/
 		int cardinaliteEnsFaits() const;
 
 		/**                       
-		*  \brief Vérifie si l'ensemble de faits est vide.
+		*  \brief Vï¿½rifie si l'ensemble de faits est vide.
 		*
 		*  \post Retourne true si l'ensemble est vide, false sinon.
-		*  \post EnsembleFaits est inchangé.
+		*  \post EnsembleFaits est inchangï¿½.
 		*/
 		bool videEnsFaits() const;
 
 		/**                       
-		*  \brief Vérifie si un élément est dans la liste.
+		*  \brief Vï¿½rifie si un ï¿½lï¿½ment est dans la liste.
 		*
-		*  \post Retourne true si l'élément est dans la liste, false sinon.
-		*  \post EnsembleFaits est inchangé.
+		*  \post Retourne true si l'ï¿½lï¿½ment est dans la liste, false sinon.
+		*  \post EnsembleFaits est inchangï¿½.
 		*/
 		bool appartientEnsFaits(const TypeFait&) const;
 
 		/**                       
-		*  \brief Retourne le fait à une position précise.
+		*  \brief Retourne le fait ï¿½ une position prï¿½cise.
 		* 
-		*  \pre La position donnée est comprise entre 1 et |L|.
+		*  \pre La position donnï¿½e est comprise entre 1 et |L|.
 		*
-		*  \post EnsembleFaits est inchangé.
+		*  \post EnsembleFaits est inchangï¿½.
 		* 
 		*  \exception range_error si la position est hors borne.
 		*/
 		TypeFait elementEnsFaits(int) const;
 
 		/**                       
-		*  \brief Retourne la position de la première occurence d'un fait précis dans la liste.
+		*  \brief Retourne la position de la premiï¿½re occurence d'un fait prï¿½cis dans la liste.
 		* 
-		*  \pre Le fait donné est dans la liste.
+		*  \pre Le fait donnï¿½ est dans la liste.
 		*
-		*  \post EnsembleFaits est inchangé.
+		*  \post EnsembleFaits est inchangï¿½.
 		* 
 		*  \exception logic_error si l'ensemble est vide.
-		*  \exception logic_error si l'élément n'est pas présent dans la liste.
+		*  \exception logic_error si l'ï¿½lï¿½ment n'est pas prï¿½sent dans la liste.
 		*/
 		int positionEnsFaits(const TypeFait&) const;
 
 		/**                       
-		*  \brief Surcharge de l'opérateur = (effectue une copie profonde).
+		*  \brief Surcharge de l'opï¿½rateur = (effectue une copie profonde).
 		* 
-		*  \pre Les deux ensembleFaits ont été déclarés.
+		*  \pre Les deux ensembleFaits ont ï¿½tï¿½ dï¿½clarï¿½s.
 		*
-		*  \post EnsembleFaits est une copie profonde de l'ensembleFaits donné en entrée.
+		*  \post EnsembleFaits est une copie profonde de l'ensembleFaits donnï¿½ en entrï¿½e.
 		* 
-		*  \exception bad_alloc s'il manque de mémoire.
+		*  \exception bad_alloc s'il manque de mï¿½moire.
 		*/
 		EnsembleFaits& operator = (const EnsembleFaits&);
 
 		/**                       
-		*  \brief Surcharge de l'opérateur == (pour comparer deux EnsembleFaits).
+		*  \brief Surcharge de l'opï¿½rateur == (pour comparer deux EnsembleFaits).
 		* 
-		*  \pre Les deux EnsembleFaits ont été déclarés.
-		*  \pre Les deux EnsembleFaits sont du même types.
+		*  \pre Les deux EnsembleFaits ont ï¿½tï¿½ dï¿½clarï¿½s.
+		*  \pre Les deux EnsembleFaits sont du mï¿½me types.
 		*
-		*  \post Le booléen contient true si les deux EnsembleFaits sont égales, false sinon.
+		*  \post Le boolï¿½en contient true si les deux EnsembleFaits sont ï¿½gales, false sinon.
 		* 
 		*/
 		bool operator == (const EnsembleFaits&);
 
 		/**                       
-		*  \brief Surcharge de l'opérateur != (pour comparer deux EnsembleFaits).
+		*  \brief Surcharge de l'opï¿½rateur != (pour comparer deux EnsembleFaits).
 		* 
-		*  \pre Les deux EnsembleFaits ont été déclarés.
-		*  \pre Les deux EnsembleFaits sont du même types.
+		*  \pre Les deux EnsembleFaits ont ï¿½tï¿½ dï¿½clarï¿½s.
+		*  \pre Les deux EnsembleFaits sont du mï¿½me types.
 		*
-		*  \post Le booléen contient false si les deux EnsembleFaits sont égales, true sinon.
+		*  \post Le boolï¿½en contient false si les deux EnsembleFaits sont ï¿½gales, true sinon.
 		*
 		*/
 		bool operator != (const EnsembleFaits&);
 
 		/**                       
-		*  \brief Affiche la liste doublement chaînée dans un flux de sortie.
-		*  \brief "Friend" pour permettre d'utiliser les données privées pour faire son travail.
+		*  \brief Affiche la liste doublement chaï¿½nï¿½e dans un flux de sortie.
+		*  \brief "Friend" pour permettre d'utiliser les donnï¿½es privï¿½es pour faire son travail.
 		* 
 		*  \pre EnsembleFaits est valide.
 		*
-		*  \post EnsembleFaits est inchangé.
+		*  \post EnsembleFaits est inchangï¿½.
 		*
-		*	Ne pas toucher à cette méthode.
+		*	Ne pas toucher ï¿½ cette mï¿½thode.
 		*/
 		friend std::ostream& operator <<(std::ostream& os, const EnsembleFaits& ef)
 		{
@@ -210,28 +210,28 @@ namespace tp1
 		}
 
 		/**                       
-		*  \brief Permet d'écrire le contenu de l’ensemble de faits dans un fichier text.
-		*  \brief Le format du fichier est le même que pour le chargement d’un système expert en ce qui concerne les faits.
-		*  \brief Retourne le nombre de faits écrits.
+		*  \brief Permet d'ï¿½crire le contenu de lï¿½ensemble de faits dans un fichier text.
+		*  \brief Le format du fichier est le mï¿½me que pour le chargement dï¿½un systï¿½me expert en ce qui concerne les faits.
+		*  \brief Retourne le nombre de faits ï¿½crits.
 		* 
-		*  \pre Le fichier reçu est déjà ouvert.
+		*  \pre Le fichier reï¿½u est dï¿½jï¿½ ouvert.
 		*
-		*  \post Le fichier reçu est encore ouvert.
-		*  \post EnsembleFaits est inchangé.
-		*  \post Retourne le nombre de faits sauvegardés dans le fichier.
+		*  \post Le fichier reï¿½u est encore ouvert.
+		*  \post EnsembleFaits est inchangï¿½.
+		*  \post Retourne le nombre de faits sauvegardï¿½s dans le fichier.
 		* 
 		*  \exception invalid_argument si le fichier de sortie n'est pas ouvert.
 		*/
 		int ecrireEnsFaits(std::ofstream & SortieFichier) const;
 
 	private:
-		//Noeud typique pour une liste doublement chainée.
+		//Noeud typique pour une liste doublement chainï¿½e.
 		class Noeud
 		{
 		public:
 			TypeFait fait;		// Contient la description du fait
 			Noeud * suivant;	// Pointe sur le fait suivant
-			Noeud * precedent;	// Pointe sur le fait précédent
+			Noeud * precedent;	// Pointe sur le fait prï¿½cï¿½dent
 
 			//Constructeur.
 			Noeud (const TypeFait& data_item, Noeud * next_ptr = 0, Noeud * pred_ptr =0):
@@ -239,9 +239,11 @@ namespace tp1
 		};
 
 		typedef Noeud * elem;
-		elem sommetG;		//Pointeur vers le sommet à gauche
+		elem sommetG;		//Pointeur vers le sommet ï¿½ gauche
 		elem sommetD;		//Pointeur vers le sommet droit
-		int cpt;			//Cardinalité de l'ensemble de faits
+		int cpt;			//Cardinalitï¿½ de l'ensemble de faits
+	   void _copier( Noeud *); // fonction prive pour copier
+	   void _detruire(); // fonction prive pouir dÃ©truire la liste
 
 	};	// Fermeture de la classe EnsembleFaits.
 

@@ -12,7 +12,8 @@
 namespace tp1
 {
 	template <typename T>
-	File<T>::File(){}
+	File<T>::File(){
+	}
 
 	template <typename T>
 	void File<T>::enfiler(const T& contenu)
@@ -39,7 +40,7 @@ namespace tp1
 	}
 
 	template <typename T>
-	int File<T>::taille(){
+	unsigned int File<T>::taille(){
 
 		return liste.cpt;
 

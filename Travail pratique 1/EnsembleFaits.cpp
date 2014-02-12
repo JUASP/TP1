@@ -1,11 +1,11 @@
 /**
  * \file EnsembleFaits.cpp
- * \brief Ce fichier contient une implantation des méthodes de la classe EnsembeFaits
+ * \brief Ce fichier contient une implantation des mï¿½thodes de la classe EnsembeFaits
  * \author ?
  * \version 0.1
- * \date février 2014
+ * \date fï¿½vrier 2014
  *
- *  Implémentation de la classe EnsembleFaits.
+ *  Implï¿½mentation de la classe EnsembleFaits.
  */
 
 #include "EnsembleFaits.h"
@@ -13,7 +13,312 @@
 
 namespace tp1
 {
+/**
+   *  \fn EnsembleFaits::EnsembleFaits()
+   *  \brief Constructeur par dï¿½faut
+   *
+   *  \post Une instance de la classe EnsembleFaits est initialisï¿½e.
+   *
+   */
+EnsembleFaits::EnsembleFaits(){
+    sommetG = 0;     //Pointeur vers le sommet ï¿½ gauche
+    sommetD = 0;     //Pointeur vers le sommet droit
+    cpt=0; // compteur pour la grosseur du tableau
+}
 
-	//Mettez l'implémentation de vos méthodes ici.
+
+
+
+/*!
+   *  \fn EnsembleFaits::EnsembleFaits(const EnsembleFaits&)
+   *  \brief Constructeur de copie
+   *
+   *  \pre recois un objet valide
+   *  \param source est une rÃ©fÃ©rence vers un objet de type EnsembleFaits
+   *  \post Une copie profonde de l'ensemble de faits source est utilisï¿½e pour initialiser la nouvelle instance.
+   *
+   *  \exception bad_alloc s'il manque de mï¿½moire. *Gere par la fonction prive _copier()
+   */
+EnsembleFaits::EnsembleFaits(const EnsembleFaits& source)
+{
+   cpt = source.cpt;
+   if (source.cpt== 0)// la liste originale est vide
+   {
+      sommetG = 0;
+      sommetD = 0;
+   }// fin if
+   else
+      _copier(source.sommetG); // gere les erreurs de bad alloc.
+
+}//fin constructeur de copie
+
+
+
+
+/**
+ *    \fn EnsembleFaits::~EnsembleFaits()
+   *  \brief Destructeur
+   *
+   *  \post L'instance de EnsembleFaits est dï¿½truite.
+   */
+EnsembleFaits::~EnsembleFaits(){
+   _detruire();
+}
+
+
+
+
+/**
+   *  \brief Ajoute un nouvel ï¿½lï¿½ment dans EnsembleFaits.
+   *
+   *  \pre Il y a assez de mï¿½moire pour ajouter le fait.
+   *  \pre La position d'ajout est comprise entre 1 et |L|+1.
+   *
+   *  \post EnsembleFaits comprend un ï¿½lï¿½ment de plus.
+   *  \post Sinon, EnsembleFaits est inchangï¿½.
+   *
+   *  \exception range_error si la position est erronï¿½e.
+   *  \exception bad_alloc s'il manque de mï¿½moire.
+   */
+void EnsembleFaits::ajouterEnsFaits(const TypeFait& fait, int position)
+{
+   try
+   {
+
+      // ici on verifie le range de position
+      if(position<1 || position > cpt+1) throw std::range_error("Ajouter:la position est invalide!");
+
+
+      elem  nouveau;
+      nouveau = new Noeud(fait); //on appelle le constructeur de la classe unNoeud
+      nouveau->suivant = 0; // init les valeurs par defaults
+      nouveau->precedent = 0; // init les valeurs par defaults
+
+
+      if(cpt==0) //le cas ou la liste est vide.
+      {
+         sommetG = nouveau;
+         sommetD = nouveau;
+         cpt++;//incremente le compteur de la taille
+         return;
+      }
+
+      if(position==1) //Cas ou position egale 1
+      {
+         nouveau->suivant=sommetG;
+         sommetG->precedent = nouveau;
+         sommetG = nouveau;
+         cpt++; //incremente le compteur de la taille
+         return;
+      }
+
+      if(position==cpt+1)// cas ou position est a la fin
+      {
+         sommetD->suivant=nouveau;
+         nouveau->precedent = sommetD;
+         sommetD = nouveau;
+         cpt++;
+         return ;
+      }
+      //Ajout dans une autre quelconque position
+      elem  courant;
+      courant = sommetG;   //on se place au debut de la liste
+      int i = 1;
+      while (i < position - 1) //permet de se deplacer dans la liste a la position avant le nouveau.
+      {
+         courant=courant->suivant;  //iterateur
+         i++;                //on increment la boucle
+      }
+      // ici on met a jour nos pointer pour bien se positionner a la valeur entre en parametre
+      nouveau->suivant = courant->suivant;
+      courant->suivant->precedent =  nouveau;
+      nouveau->precedent = courant;
+      courant->suivant = nouveau;
+      cpt++;
+   }// fin try
+   catch(std::exception& e){
+       std::cerr << "ERREUR: " << e.what() << std::endl;
+       throw;//On relance alors l'exception pour indiquer qu'une erreur est survenue
+   }
+
+}
+
+
+
+
+/**
+*  \fn void EnsembleFaits::enleverEl(const TypeFait& element)
+*  \brief enleve la premiere occurence d'un element donne
+*
+*  \pre L'ï¿½lï¿½ment donnï¿½ est compris dans l'ensemble.
+*  \param element est un element de type TypeFait donner ne reference
+*
+*  \post EnsembleFaits comprend un ï¿½lï¿½ment de moins.
+*  \post Sinon, EnsembleFaits est inchangï¿½.
+*
+*  \exception logic_error si l'ï¿½lï¿½ment n'est pas prï¿½sent dans la liste.
+*/
+void EnsembleFaits::enleverEl(const TypeFait& element)
+{
+   elem trouve = sommetG;
+   elem pred;
+   while (trouve != 0 && trouve->fait != element ) // ici on parcours la liste
+   {
+      pred = trouve;
+      trouve = trouve->suivant;
+   }
+
+   if (trouve == 0)
+   {
+      throw std::logic_error("EnleverEl:l'element n'existe pas dans la liste"); // lance une erreur
+   }
+   else
+      {
+         if(cpt == 1) // cas ou on a un seul element dans la liste
+         {
+            sommetG = 0;
+            sommetD = 0;
+         }
+         if (sommetG == trouve) // cas ou l'element est le premier
+         {
+            sommetG = sommetG->suivant;
+            sommetG->precedent = 0;
+            trouve->suivant = 0;
+         }
+         else if (sommetD == trouve)// cas ou l'element est le dernier
+         {
+            sommetD = sommetD->precedent;
+            sommetD->suivant = 0;
+            trouve->precedent = 0;
+         }
+
+         else // cas ou il est ailleur
+         {
+            pred->suivant = trouve->suivant;
+         }
+
+         trouve->suivant = 0;
+         delete trouve;
+         cpt--; // on dÃ©cremente la taille
+      }
+}
+
+
+
+
+/**
+ * \fn  void EnsembleFaits::enleverPosEnsFaits(int position)
+*  \brief Enlï¿½ve un ï¿½lï¿½ment ï¿½ une position prï¿½cise.
+*
+*  \pre La position donnï¿½e est comprise entre 1 et |L|.
+*  \param position est un element de type int.
+*
+*  \post EnsembleFaits comprend un ï¿½lï¿½ment de moins.
+*  \post Sinon, EnsembleFaits est inchangï¿½.
+*
+*  \exception logic_error si l'ensemble est dï¿½jï¿½ vide.
+*  \exception range_error si la position est hors borne.
+*/
+void EnsembleFaits::enleverPosEnsFaits(int position)
+{
+   elem trouve;
+
+      //Vï¿½rification des hypothï¿½ses (prï¿½conditions)
+      //La position, ï¿½a couvre ï¿½galement le cas oï¿½ la liste est vide (taille = 0).
+   if (cpt == 0)
+        {
+           throw std::logic_error("EnleverEl:l'element n'existe pas dans la liste"); // lance une erreur
+        }
+      if(position<1 || position > cpt){
+         throw std::range_error("EnleverPos:Position pour l'enlevement est erronï¿½e");
+      }
+
+
+      // cas ou' pos = 1
+      if(position == 1)
+      {
+         trouve = sommetG;
+         sommetG = sommetG->suivant;
+         if (cpt!=1)  //s'il y avait juste un ï¿½lï¿½ment, la ligne suivante serait illï¿½gale
+            sommetG->precedent = 0;
+         trouve->suivant = 0;
+      }
+      else if (position == cpt)
+      {//..ï¿½ la fin de la liste
+         trouve = sommetD;
+         sommetD = sommetD->precedent;
+         sommetD->suivant = 0;
+         trouve->precedent = 0;
+      }
+      else
+      {
+         int cpt(1);
+         elem courant = sommetG; //on se positionne au dï¿½but de la liste chaï¿½nï¿½e
+         while (cpt< position - 1) //boucle pour positionner courant sur la structre d'avant celui ï¿½ enlever
+         {
+            courant=courant->suivant;  //on passe ï¿½ la structure suivante..
+            cpt++;                  //...et on compte
+         }
+         trouve = courant->suivant;
+         courant->suivant = trouve->suivant;
+         // on "coupe" la structure  supprimï¿½e de la liste
+         trouve->suivant = 0;
+         trouve->precedent = 0;
+      }
+
+      //libï¿½ration de la mï¿½moire associï¿½e ï¿½ la structure  supprimï¿½e
+      delete trouve;
+      cpt--;
+}
+
+
+/**
+ * \fn Liste<T>:: _copier(Noeud * sn)
+ * \brief fonction prive qui permet de copier un objet.
+ * \pre objet est valide
+ *
+ *
+ * \param[in] sn Le pointeur sur le dï¿½but de la liste source
+ * \post la copie se fait bien
+ * \exception bad_alloc s'il manque de mï¿½moire.
+ */
+void EnsembleFaits:: _copier(Noeud * source)
+{
+   try{
+      sommetG = new Noeud(source->fait); // copie le premier noeud
+      sommetG->precedent = 0;
+
+      sommetD = sommetG; // copie le reste de la liste
+      for (elem temp = source->suivant;temp != 0; temp = temp->suivant )
+      {
+         sommetD->suivant = new Noeud(temp->fait);
+         sommetD->suivant->precedent = sommetD;
+         sommetD =sommetD->suivant;
+         sommetD->suivant = 0;
+      }//fin for
+
+      sommetD->suivant = 0; // on signal la fin de la liste en pointant sur 0
+   }catch(std::exception&){
+      _detruire(); // si une erreur survient on annule les actions prÃ¨cedente
+      throw;//on relance l'erreur
+   }
+}
+
+/**
+ * \fn void Liste<T>:: _detruire()
+ * \brief fonctione prive qui permet de dÃ©truire l'objet courant. et de liberer la memoire.
+ * \post tout est detruit comme prevu
+ */
+void EnsembleFaits:: _detruire()
+{
+   elem courant = sommetG; // courant se place au debut de la liste
+   while(courant!=0)
+   {
+      sommetG=sommetG->suivant;
+      delete courant;
+      courant=sommetG;
+   }
+}
+
 
 }
