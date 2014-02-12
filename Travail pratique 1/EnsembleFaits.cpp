@@ -86,7 +86,7 @@ void EnsembleFaits::ajouterEnsFaits(const TypeFait& fait, int position)
    {
 
       // ici on verifie le range de position
-      if(position<1 || position > cpt+1) throw std::range_error("Ajouter:la position est invalide!");
+      if(position<1 || position > cpt+1) throw std::range_error("ajouterEnsFaits:la position est invalide!");
 
 
       elem  nouveau;
@@ -222,29 +222,27 @@ void EnsembleFaits::enleverEl(const TypeFait& element)
 void EnsembleFaits::enleverPosEnsFaits(int position)
 {
    elem trouve;
-
-      //V�rification des hypoth�ses (pr�conditions)
-      //La position, �a couvre �galement le cas o� la liste est vide (taille = 0).
    if (cpt == 0)
-        {
-           throw std::logic_error("EnleverEl:l'element n'existe pas dans la liste"); // lance une erreur
-        }
-      if(position<1 || position > cpt){
-         throw std::range_error("EnleverPos:Position pour l'enlevement est erron�e");
-      }
+   {
+      throw std::logic_error("enleverPosEnsFaits:l'element n'existe pas dans la liste"); // lance une erreur
+   }
+   if(position<1 || position > cpt)
+   {
+      throw std::range_error("enleverPosEnsFaits:Position pour l'enlevement est erron�e");
+   }
 
-
-      // cas ou' pos = 1
-      if(position == 1)
+   if(position == 1)// cas ou pos = 1
+   {
+      trouve = sommetG;
+      sommetG = sommetG->suivant; // on change notre sommetG
+      if (cpt!=1)
       {
-         trouve = sommetG;
-         sommetG = sommetG->suivant;
-         if (cpt!=1)  //s'il y avait juste un �l�ment, la ligne suivante serait ill�gale
-            sommetG->precedent = 0;
-         trouve->suivant = 0;
+         sommetG->precedent = 0;
       }
-      else if (position == cpt)
-      {//..� la fin de la liste
+      trouve->suivant = 0;
+      }
+      else if (position == cpt) // cas ou position est a la fin
+      {
          trouve = sommetD;
          sommetD = sommetD->precedent;
          sommetD->suivant = 0;
@@ -252,24 +250,106 @@ void EnsembleFaits::enleverPosEnsFaits(int position)
       }
       else
       {
-         int cpt(1);
-         elem courant = sommetG; //on se positionne au d�but de la liste cha�n�e
-         while (cpt< position - 1) //boucle pour positionner courant sur la structre d'avant celui � enlever
+         int i =1;
+         elem courant = sommetG; //on se positionne au debut de la liste
+         while (i< position - 1) //parcours les element de la liste
          {
-            courant=courant->suivant;  //on passe � la structure suivante..
-            cpt++;                  //...et on compte
+            courant=courant->suivant;  //on se deplace
+            i++;                  //on incremente la boucle
          }
          trouve = courant->suivant;
          courant->suivant = trouve->suivant;
-         // on "coupe" la structure  supprim�e de la liste
          trouve->suivant = 0;
          trouve->precedent = 0;
       }
-
-      //lib�ration de la m�moire associ�e � la structure  supprim�e
-      delete trouve;
-      cpt--;
+      delete trouve; // free la memoire
+      cpt--; // decremente la taille
 }
+
+
+
+
+/**
+   *  \fn int EnsembleFaits::cardinaliteEnsFaits() const
+   *  \brief Retourne le nombre d'�l�ments dans l'ensemble de faits.
+   *
+   *  \post EnsembleFaits est inchang�.
+   *  \return cpt qui correspond a la taille de la liste
+   */
+int EnsembleFaits::cardinaliteEnsFaits() const {
+   return cpt;
+}
+
+
+
+
+/**
+   *  \fn bool EnsembleFaits::videEnsFaits() const
+   *  \brief V�rifie si l'ensemble de faits est vide.
+   *
+   *  \post Retourne true si l'ensemble est vide, false sinon.
+   *  \post EnsembleFaits est inchang�.
+   *  \return true ou false selon le calcul de cpt==0
+   */
+bool EnsembleFaits::videEnsFaits() const{
+   return cpt==0; // return true or false depend de la valeur de cpt
+}
+
+
+
+/**
+      *  \fn bool EnsembleFaits::appartientEnsFaits(const TypeFait& source) const
+      *  \brief V�rifie si un �l�ment est dans la liste.
+      *
+      *  \post Retourne true si l'�l�ment est dans la liste, false sinon.
+      *  \post EnsembleFaits est inchang�.
+      *  \return false si le TypeFait source n'est pas dans la liste
+      *  \return True si il l'est.
+      */
+bool EnsembleFaits::appartientEnsFaits(const TypeFait& source) const{
+   elem  courant = sommetG; // on se positionne au debut de la liste
+   while (courant!=0) // tant que ne ne somme pas a la fin
+   {
+      if (courant->fait == source)
+      {
+         return true;
+      }
+         courant = courant->suivant;
+    }// fin while
+      return false;
+}
+
+
+
+
+/**
+   *  \fn TypeFait EnsembleFaits::elementEnsFaits(int) const
+   *  \brief Retourne le fait � une position pr�cise.
+   *
+   *  \pre La position donn�e est comprise entre 1 et |L|.
+   *
+   *  \post EnsembleFaits est inchang�.
+   *
+   *  \exception range_error si la position est hors borne.
+   *  \return courant->fait on retourne un type TypeFait
+   */
+TypeFait EnsembleFaits::elementEnsFaits(int position) const
+{
+   if(position <1 || position > cpt) throw std::range_error("elementEnsFaits:Position est invalide");
+
+   elem courant = sommetG; // on se positionne au debut de la liste
+   int i =1;
+   while (i< position)      //pour pour parcourir
+   {
+      courant=courant->suivant;  //on se deplace dans la liste
+      i++;                //on incremente la boucle
+   }
+   return courant->fait;
+ }
+
+
+
+
 
 
 /**
