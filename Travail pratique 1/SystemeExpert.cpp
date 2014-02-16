@@ -18,6 +18,9 @@ namespace tp1
  *  \post Une instance de la classe SystemeExpert est initialis�e.
  */
 SystemeExpert::SystemeExpert(){
+   baseRegles=0;
+   baseFaits=0;
+   baseNouveauxFaits=0;
 }
 
 
@@ -220,7 +223,7 @@ void SystemeExpert::chargerSE(std::ifstream & file){
  *  \brief Permet de sauvegarder le syst�me expert dans un fichier texte.
  *
  *  \pre Le fichier a �t� ouvert � l'aide de la m�thode "open" pr�alablement � l'appel de la m�thode.
- *
+ *  \param SortieFichier on recoit un fichier ouvert.
  *  \post Le syst�me expert est charg�.
  *  \post Le fichier est encore ouvert.
  *  \post Le fichier a le bon format.
@@ -229,8 +232,28 @@ void SystemeExpert::chargerSE(std::ifstream & file){
  *  \exception logic_error si le syst�me expert est vide.
  *  \exception invalid_argument si le fichier texte n'est pas correctement ouvert.
  */
-int SystemeExpert::sauvegarderSE(std::ofstream &) const{
+int SystemeExpert::sauvegarderSE(std::ofstream & SortieFichier) const{
+   if (baseRegles==0 && baseFaits==0 && baseNouveauxFaits==0)
+   {
+      throw std::logic_error("sauvegarderSE:le systeme expert est vide!");
+   }
+   if(SortieFichier)
+   {
+     for (int i=0; i <= baseRegles.cpt; i++)// boucle qui parcours tous les elements de baseRegles.
+     {
+           baseRegles.element(i).premisses.ecrireEnsFaits(SortieFichier);
+           SortieFichier << "!>" << std::endl; // marque la fin des premisses pour la regle N.
+           baseRegles.element(i).conclusions.ecrireEnsFaits(SortieFichier);
+           SortieFichier << "!%" << std::endl; // marque la fin des conclusions pour la regle N.
+     }
+     SortieFichier << "!!" << std::endl; // marque la fin des regles.
+     baseFaits.ecrireEnsFaits(SortieFichier); // on ecrit dans le fichier tous les elements de la baseFaits.
 
+   }
+   else{
+      throw std::invalid_argument("sauvegarderSE:le fichier texte n'est pas correctement ouvert");
+   }
+   return 0;
 }
 
 
