@@ -299,7 +299,6 @@ EnsembleFaits& EnsembleFaits::operator =(const EnsembleFaits& source)
 			_detruire();
 
 		cpt = source.cpt;
-		elem temp;
 
 		if (source.cpt== 0)// la liste originale est vide
 		{
@@ -325,12 +324,12 @@ bool EnsembleFaits::operator ==(const EnsembleFaits& source)
 	int i;
 	for(i = 1; i <= cpt; i++)
 	{
-		if(source.elementEnsFaits(i) == this->elementEnsFaits(i))
+		if(source.elementEnsFaits(i) != this->elementEnsFaits(i))
 		{
-			return true;
+			return false;
 		}
 	}
-	return false;
+	return true;
 }
 
 /**

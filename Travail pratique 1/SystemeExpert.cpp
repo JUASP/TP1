@@ -1,9 +1,9 @@
 /**
  * \file SystemeExpert.cpp
- * \brief Ce fichier contient une implantation des méthodes de la classe SystemeExpert
+ * \brief Ce fichier contient une implantation des mï¿½thodes de la classe SystemeExpert
  * \author ?
  * \version 0.1
- * \date février 2014
+ * \date fï¿½vrier 2014
  *
  */
 
@@ -11,7 +11,167 @@
 
 namespace tp1
 {
+/**
+ * \fn SystemeExpert::SystemeExpert()
+ *  \brief Constructeur par dï¿½faut
+ *
+ *  \post Une instance de la classe SystemeExpert est initialisï¿½e.
+ */
+SystemeExpert::SystemeExpert(){
+}
 
-	//Mettez l'implémentation de vos méthodes ici.
+
+
+
+
+/**
+    *  \fn SystemeExpert::~SystemeExpert()
+    *  \brief Destructeur
+    *
+    *  \post L'instance de EnsembleFaits est dï¿½truite.
+    */
+SystemeExpert::~SystemeExpert(){
+   delete baseRegles;   // on fais appelle au destructeur de l'objet de type ListeCirculaire
+   delete baseFaits;         // on fais appelle au destructeur de l'objet de type EnsembleFait
+   delete baseNouveauxFaits.liste; // on fais appelle au destructeur de l'objet de type ListeCirculaire
+}
+
+
+
+
+
+/*!
+ *  \fn SystemeExpert::SystemeExpert(const SystemeExpert &)
+ *  \brief Constructeur de copie
+ *  \pre on recoit un objet valide
+ *  \param source un objet de type SystemeExpert
+ *  \post Une copie profonde du systï¿½me expert source est utilisï¿½e pour initialiser la nouvelle instance.
+ *
+ *  \exception bad_alloc s'il manque de mï¿½moire.
+ */
+SystemeExpert::SystemeExpert(const SystemeExpert & source){
+   baseRegles=source.baseRegles; // on fais appelle a la surchage de l'operateur = de la classe ListeCirculaire.
+   baseFaits=source.baseFaits; // on fais appelle a la surchage de l'operateur = de la classe EnsembleFaits.
+   baseNouveauxFaits.liste = source.baseNouveauxFaits.liste;// on fais appelle a la surchage de l'operateur = de la classe ListeCirculaire.
+   // bad_alloc sera retourner par les mÃ©thodes de surchage des type plushaut.
+}
+
+
+
+
+
+
+/**
+ *  \fn SystemeExpert & SystemeExpert::operator = (const SystemeExpert & source)
+ *  \brief Surcharge de l'opï¿½rateur = (effectue une copie profonde).
+ *
+ *  \pre Les deux systemeExperts ont ï¿½tï¿½ dï¿½clarï¿½s.
+ *
+ *  \post SystemeExpert est une copie profonde du systï¿½me expert donnï¿½ en entrï¿½e.
+ *
+ *  \exception bad_alloc s'il manque de mï¿½moire.
+ */
+SystemeExpert & SystemeExpert::operator = (const SystemeExpert & source){
+   baseRegles=source.baseRegles; // on fais appelle a la surchage de l'operateur = de la classe ListeCirculaire.
+   baseFaits=source.baseFaits; // on fais appelle a la surchage de l'operateur = de la classe EnsembleFaits.
+   baseNouveauxFaits.liste = source.baseNouveauxFaits.liste;// on fais appelle a la surchage de l'operateur = de la classe ListeCirculaire.
+   // bad_alloc sera retourner par les mÃ©thodes de surchage des type plushaut.
+   return (*this);
+}
+
+
+
+
+
+/**
+       *  \fn void SystemeExpert::ajouterRegleSE(const Regle & source)
+       *  \brief Permet d'ajouter une rï¿½gle (dï¿½jï¿½ crï¿½ï¿½e et initialisï¿½e) au systï¿½me expert.
+       *
+       *  \pre La rï¿½gle est crï¿½ï¿½e et initialisï¿½e.
+       *  \param source est de type Regle
+       *
+       *  \post La rï¿½gle est ajoutï¿½e au systï¿½me expert.
+       *
+       *  \exception bad_alloc s'il manque de mï¿½moire.
+       */
+ void SystemeExpert::ajouterRegleSE(const Regle & element){
+         baseRegles.ajouterFin(element); // On ajoute une rÃ¨gle au systeme expert! la regle est ajouter a la fin de la listeCirculaire.
+         // la gestion du bad_alloc est traitÃ© dans la mÃ©thode ajouterFin()
+ }
+
+
+
+
+
+ /**
+     *  \fn   void SystemeExpert::ajouterFaitSE(const TypeFait & element)
+     *  \brief Permet d'ajouter un fait (dï¿½jï¿½ crï¿½ï¿½ et initialisï¿½) au systï¿½me expert
+     *
+     *  \pre Le fait est crï¿½ï¿½ et initialisï¿½.
+     *  \param element est de type TypeFait.
+     *
+     *  \post Le fait est ajoutï¿½ au systï¿½me expert.
+     *
+     *  \exception bad_alloc s'il manque de mï¿½moire.
+     */
+void SystemeExpert::ajouterFaitSE(const TypeFait & element){
+   baseFaits.ajouterEnsFaits(element,1); // on ajoute l'element de TypeFait en position 1 de la liste.
+   // la gestion du bad_alloc est traitÃ© dans la mÃ©thode ajouterFin()
+}
+
+
+
+
+
+/**
+       *  \brief Permet de charger un systï¿½me expert ï¿½ partir d'un fichier texte.
+       *
+       *  \pre Le fichier a ï¿½tï¿½ ouvert ï¿½ l'aide de la mï¿½thode "open" prï¿½alablement ï¿½ l'appel de la mï¿½thode.
+       *  \pre Le fichier a le bon format.
+       *
+       *  \post Le systï¿½me expert est chargï¿½.
+       *  \post Le fichier est encore ouvert.
+       *
+       *  \exception logic_error si le fichier texte est vide.
+       *  \exception invalid_argument si le fichier texte n'est pas correctement ouvert.
+       *
+       * Voici le format du fichier texte:
+       *
+       * Regle_1_Premisse_1      |
+       * Regle_1_Premisse_2      |
+       * ...                  |
+       * Regle_1_Premisse_N      | PREMIï¿½RE
+       * !>                | Rï¿½GLE
+       * Regle_1_Conclusion_1 |
+       * Regle_1_Conclusion_2 |
+       * ...                  |
+       * Regle_1_Conclusion_N |
+       * !%
+       * Regle_2_Premisse_1      |
+       * ...                  |
+       * Regle_2_Premisse_N      | DEUXIï¿½ME
+       * !>                | Rï¿½GLE
+       * Regle_2_Conclusion_1 |
+       * ...                  |
+       * Regle_2_Conclusion_N |
+       * !%
+       * ...                     ...
+       * !%
+       * Regle_N_Premisse_1      |
+       * ...                  |
+       * Regle_N_Premisse_N      | N iï¿½me
+       * !>                | Rï¿½GLE
+       * Regle_N_Conclusion_1 |
+       * ...                  |
+       * Regle_N_Conclusion_N |
+       * !!
+       * Fait_1               |
+       * Fait_2               | BASE DE
+       * ...                  | FAITS
+       * Fait_3               |
+      */
+void SystemeExpert::chargerSE(std::ifstream &){
+
+}
 
 }
