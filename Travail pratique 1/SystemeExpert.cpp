@@ -124,6 +124,7 @@ void SystemeExpert::ajouterFaitSE(const TypeFait & element){
 
 
 /**
+       *  \fn void SystemeExpert::chargerSE(std::ifstream &)
        *  \brief Permet de charger un syst�me expert � partir d'un fichier texte.
        *
        *  \pre Le fichier a �t� ouvert � l'aide de la m�thode "open" pr�alablement � l'appel de la m�thode.
@@ -170,8 +171,44 @@ void SystemeExpert::ajouterFaitSE(const TypeFait & element){
        * ...                  | FAITS
        * Fait_3               |
       */
-void SystemeExpert::chargerSE(std::ifstream &){
+void SystemeExpert::chargerSE(std::ifstream & file){
+   if(file)
+   {
+       Regle regleLue;// regle temporaire qui va represente la regle N.
+       std::string ligne;
+       int indice = 0; // 0 pour les premisses 1 pour les conclusions et 2 pour les faits.
+       while (getline(file,ligne))
+       {
+          if(ligne == "!>"){ // indice pour commencer les conclusions
+             indice = 1;
+          }// fin if
+          if(ligne == "!%"){// indice pour les premisses
+             indice = 0;
+             baseRegles.ajouter(regleLue,1); // ajoute la règle N a baseRegles
+             delete regleLue; // une fois la règle ajoute a baseRegles on la supprime.
+             Regle regleLu; // declare une nouvelle regle.
+          }//fin if
+          if (ligne ==  "!!"){// indice pour les faits.
+             indice = 2;
+             baseRegles.ajouter(regleLue,1); // ajoute la règle N a baseRegles
+             delete regleLue;
+          }// fin if
+          switch(indice)
+          {
+            case 0: regleLue.premisses.ajouterEnsFaits(ligne,1);
+                    break;
+            case 1: regleLue.conclusions.ajouterEnsFaits(ligne,1);
+                    break;
+            case 2: baseFaits.ajouterEnsFaits(ligne,1);
+                    break;
+          }// fin switch
 
-}
+      }// fin while
+   }//fin if
+   else
+   {
+    std::cout << "ERREUR: Impossible d'ouvrir le fichier en lecture." << std::endl;
+   }// fin else
+}// fin chargeSE()
 
 }
