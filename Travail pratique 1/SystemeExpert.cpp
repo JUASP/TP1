@@ -207,8 +207,31 @@ void SystemeExpert::chargerSE(std::ifstream & file){
    }//fin if
    else
    {
-    std::cout << "ERREUR: Impossible d'ouvrir le fichier en lecture." << std::endl;
+      throw std::invalid_argument("chargerSE:le fichier texte n'est pas correctement ouvert");
    }// fin else
 }// fin chargeSE()
+
+
+
+
+
+/**
+ *  \fn int SystemeExpert::sauvegarderSE(std::ofstream &) const
+ *  \brief Permet de sauvegarder le syst�me expert dans un fichier texte.
+ *
+ *  \pre Le fichier a �t� ouvert � l'aide de la m�thode "open" pr�alablement � l'appel de la m�thode.
+ *
+ *  \post Le syst�me expert est charg�.
+ *  \post Le fichier est encore ouvert.
+ *  \post Le fichier a le bon format.
+ *  \post Le nombre de faits �tablis dans le syst�me expert est retourn�.
+ *
+ *  \exception logic_error si le syst�me expert est vide.
+ *  \exception invalid_argument si le fichier texte n'est pas correctement ouvert.
+ */
+int SystemeExpert::sauvegarderSE(std::ofstream &) const{
+
+}
+
 
 }

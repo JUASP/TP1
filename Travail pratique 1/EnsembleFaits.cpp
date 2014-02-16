@@ -468,6 +468,41 @@ void EnsembleFaits:: _copier(Noeud * source)
    }
 }
 
+
+
+
+
+/**
+*  \fn EnsembleFaits::ecrireEnsFaits(std::ofstream & SortieFichier) const
+*  \brief Permet d'�crire le contenu de l�ensemble de faits dans un fichier text.
+*  \brief Le format du fichier est le m�me que pour le chargement d�un syst�me expert en ce qui concerne les faits.
+*  \brief Retourne le nombre de faits �crits.
+*
+*  \pre Le fichier re�u est d�j� ouvert.
+*  \param SortieFichier est de type ofstream.
+*
+*  \post Le fichier re�u est encore ouvert.
+*  \post EnsembleFaits est inchang�.
+*  \post Retourne le nombre de faits sauvegard�s dans le fichier.
+*
+*  \exception invalid_argument si le fichier de sortie n'est pas ouvert.
+*/
+int EnsembleFaits::ecrireEnsFaits(std::ofstream & SortieFichier) const{
+          if(SortieFichier)
+          {
+             for (int i=0; i <= cpt; i++) // boucle qui parcours tous les elements d'ensemble fait.
+                SortieFichier << this->elementEnsFaits(i) << std::endl;
+          }
+          else
+             throw std::invalid_argument("ecrireEnsFaits:le fichier texte n'est pas correctement ouvert");
+
+          return 0;
+}
+
+
+
+
+
 /**
  * \fn void Liste<T>:: _detruire()
  * \brief fonctione prive qui permet de détruire l'objet courant. et de liberer la memoire.
