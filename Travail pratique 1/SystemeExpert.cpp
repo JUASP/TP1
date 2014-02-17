@@ -175,6 +175,9 @@ void SystemeExpert::ajouterFaitSE(const TypeFait & element){
        * Fait_3               |
       */
 void SystemeExpert::chargerSE(std::ifstream & file){
+   if(file.peek() == std::ifstream::traits_type::eof()){
+      throw std::logic_error("chargerSE:logic_error le fichier texte est vide!");
+   }
    if(file)
    {
        Regle regleLue;// regle temporaire qui va represente la regle N.
@@ -184,17 +187,20 @@ void SystemeExpert::chargerSE(std::ifstream & file){
        {
           if(ligne == "!>"){ // indice pour commencer les conclusions
              indice = 1;
+             continue;
           }// fin if
           if(ligne == "!%"){// indice pour les premisses
              indice = 0;
              baseRegles.ajouter(regleLue,1); // ajoute la règle N a baseRegles
              delete regleLue; // une fois la règle ajoute a baseRegles on la supprime.
-             Regle regleLu; // declare une nouvelle regle.
+             Regle regleLue; // declare une nouvelle regle.
+             continue;
           }//fin if
           if (ligne ==  "!!"){// indice pour les faits.
              indice = 2;
              baseRegles.ajouter(regleLue,1); // ajoute la règle N a baseRegles
              delete regleLue;
+             continue;
           }// fin if
           switch(indice)
           {
@@ -239,7 +245,7 @@ int SystemeExpert::sauvegarderSE(std::ofstream & SortieFichier) const{
    }
    if(SortieFichier)
    {
-     for (int i=0; i <= baseRegles.cpt; i++)// boucle qui parcours tous les elements de baseRegles.
+     for (int i=1; i <= baseRegles.cpt; i++)// boucle qui parcours tous les elements de baseRegles.
      {
            baseRegles.element(i).premisses.ecrireEnsFaits(SortieFichier);
            SortieFichier << "!>" << std::endl; // marque la fin des premisses pour la regle N.
@@ -256,5 +262,60 @@ int SystemeExpert::sauvegarderSE(std::ofstream & SortieFichier) const{
    return 0;
 }
 
+
+
+
+
+/**
+ *  \fn ListeCirculaire<Regle> SystemeExpert::chainageAvant()
+ *  \brief Permet de saturer la base de faits du syst�me expert en retrouvant les faits
+ *  \brief qui peuvent �tre d�duits de la base de faits du syst�me et en se basant sur
+ *  \brief les r�gles de celui-ci.
+ *
+ *  \pre Le syst�me expert contient des faits et des r�gles.
+ *
+ *  \post Une liste circulaire contenant les r�gles qui ont permis de d�terminer de nouveaux faits est retourn�e.
+ *  \post La base des nouveaux faits est modifi�e.
+ *
+ *  \exception logic_error si la base de faits est vide.
+ *  \exception logic_error si la base de r�gles est vide.
+ */
+ListeCirculaire<Regle> SystemeExpert::chainageAvant(){
+   if (baseRegles==0)
+   {
+         throw std::logic_error("chainageAvant:la base de regles est vide");
+   }
+   if (baseFaits==0)
+   {
+          throw std::logic_error("chainageAvant:la base de faits est vide");
+   }
+   while (baseNouveauxFaits==0){
+      for(int i=1; i<=baseRegles.cpt ; i++)// parcours toutes les règles
+      {
+         for(int j=1; j<=baseRegles.element(i).premisses.cpt; j++)  // parcours toutes les premisses
+         {
+            TypeFait courant = baseRegles.element(i).premisses.elementEnsFaits(j); // on donne la valeur courante de type Fait a courant.
+            if(baseFaits.appartientEnsFaits(courant))// compare les premisses avec les la base de fait.
+            {
+               if(j<baseRegles.element(i).premisses.cpt) // on continue le parcours !
+               {
+                  continue;
+               }
+            }
+            else
+            {
+               break; // pour sortir du parcours des premisses. jump vers la prochaine regle.
+            }
+            TypeFait assertion = baseRegles.element(i).premisses.elementEnsFaits(i);
+            if(!baseNouveauxFaits.liste.appartient(assertion))// on vérifie si l'assertion appartient deja a la liste.
+            {
+               baseNouveauxFaits.enfiler(assertion); // enfile le nouveauFaits dans la file.
+            }
+         }// fin for qui parcours toutes les elements de premisses.
+      }// fin for qui parcours toutes les règles
+   }
+
+   return 0;
+}
 
 }

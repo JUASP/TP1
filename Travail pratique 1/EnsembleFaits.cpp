@@ -490,7 +490,7 @@ void EnsembleFaits:: _copier(Noeud * source)
 int EnsembleFaits::ecrireEnsFaits(std::ofstream & SortieFichier) const{
           if(SortieFichier)
           {
-             for (int i=0; i <= cpt; i++) // boucle qui parcours tous les elements d'ensemble fait.
+             for (int i=1; i <= cpt; i++) // boucle qui parcours tous les elements d'ensemble fait.
                 SortieFichier << this->elementEnsFaits(i) << std::endl;
           }
           else
