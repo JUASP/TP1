@@ -42,7 +42,7 @@ namespace tp1
 	template <typename T>
 	unsigned int File<T>::taille(){
 
-		return liste.cpt;
+		return liste.taille();
 
 	}
 }

@@ -18,8 +18,6 @@ namespace tp1
 
 Regle::Regle()
 {
-   premisses = 0;
-   conclusions = 0;
    utilisee = false;
 }
 
@@ -41,10 +39,9 @@ Regle::Regle(const Regle& source)
 */
 Regle::~Regle()
 {
-   premisses = 0;
-   conclusions = 0;
+   premisses.~EnsembleFaits();
+   conclusions.~EnsembleFaits();
    utilisee = false;
-
 }
 
 /**
@@ -54,6 +51,9 @@ Regle::~Regle()
 */
 Regle& Regle::operator =(const Regle& source)
 {
+   premisses = source.premisses; // utilise la surchage du type EnsembleFaits.
+   conclusions = source.conclusions;// utilise la surchage du type EnsembleFaits.
+   utilisee = source.utilisee;// utilise la surchage du type booléan.
    return (*this);
 }
 
@@ -64,7 +64,7 @@ Regle& Regle::operator =(const Regle& source)
 */
 EnsembleFaits * Regle::GetPremisses()
 {
-return *premisses;
+   return &premisses;
 }
 
 /**
@@ -74,7 +74,7 @@ return *premisses;
 */
 EnsembleFaits * Regle::GetConclusions()
 {
-return *conclusions;
+   return &conclusions;
 }
 
 /**
@@ -84,7 +84,7 @@ return *conclusions;
 */
 bool Regle::GetUtilisee() const
 {
-   return *utilisee;
+   return utilisee;
 }
 /**
    *  \fn bool Regle::operator == (const Regle& source)
@@ -139,7 +139,7 @@ bool Regle::operator != (const Regle& source){
       *  \post La valeur du bool�en est modifi�e.
       */
 void Regle::SetUtilisee (const bool & flag){
-   *utilisee=flag;
+   utilisee=flag;
 }
 
 }// fin namespace

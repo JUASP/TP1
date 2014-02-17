@@ -18,9 +18,6 @@ namespace tp1
  *  \post Une instance de la classe SystemeExpert est initialis�e.
  */
 SystemeExpert::SystemeExpert(){
-   baseRegles=0;
-   baseFaits=0;
-   baseNouveauxFaits=0;
 }
 
 
@@ -34,9 +31,13 @@ SystemeExpert::SystemeExpert(){
     *  \post L'instance de EnsembleFaits est d�truite.
     */
 SystemeExpert::~SystemeExpert(){
-   delete baseRegles;   // on fais appelle au destructeur de l'objet de type ListeCirculaire
-   delete baseFaits;         // on fais appelle au destructeur de l'objet de type EnsembleFait
-   delete baseNouveauxFaits.liste; // on fais appelle au destructeur de l'objet de type ListeCirculaire
+   baseRegles.~ListeCirculaire();   // on fais appelle au destructeur de l'objet de type ListeCirculaire
+   baseFaits.~EnsembleFaits();         // on fais appelle au destructeur de l'objet de type EnsembleFait
+
+   for(unsigned int i = 1; i<=baseNouveauxFaits.taille();i++){
+      baseNouveauxFaits.defiler(); // on défile jusqua ce que la file soit vide
+   }
+
 }
 
 
@@ -55,7 +56,10 @@ SystemeExpert::~SystemeExpert(){
 SystemeExpert::SystemeExpert(const SystemeExpert & source){
    baseRegles=source.baseRegles; // on fais appelle a la surchage de l'operateur = de la classe ListeCirculaire.
    baseFaits=source.baseFaits; // on fais appelle a la surchage de l'operateur = de la classe EnsembleFaits.
-   baseNouveauxFaits.liste = source.baseNouveauxFaits.liste;// on fais appelle a la surchage de l'operateur = de la classe ListeCirculaire.
+   for (unsigned int i = 1; i <= source.baseNouveauxFaits.taille(); i++)
+   {
+      baseNouveauxFaits.enfiler(const source.baseNouveauxFaits.defiler());
+   }
    // bad_alloc sera retourner par les méthodes de surchage des type plushaut.
 }
 
@@ -192,21 +196,21 @@ void SystemeExpert::chargerSE(std::ifstream & file){
           if(ligne == "!%"){// indice pour les premisses
              indice = 0;
              baseRegles.ajouter(regleLue,1); // ajoute la règle N a baseRegles
-             delete regleLue; // une fois la règle ajoute a baseRegles on la supprime.
+             regleLue.~Regle(); // une fois la règle ajoute a baseRegles on la supprime.
              Regle regleLue; // declare une nouvelle regle.
              continue;
           }//fin if
           if (ligne ==  "!!"){// indice pour les faits.
              indice = 2;
              baseRegles.ajouter(regleLue,1); // ajoute la règle N a baseRegles
-             delete regleLue;
+             regleLue.~Regle();
              continue;
           }// fin if
           switch(indice)
           {
-            case 0: regleLue.premisses.ajouterEnsFaits(ligne,1);
+            case 0: regleLue.GetPremisses()->ajouterEnsFaits(ligne,1);
                     break;
-            case 1: regleLue.conclusions.ajouterEnsFaits(ligne,1);
+            case 1: regleLue.GetConclusions()->ajouterEnsFaits(ligne,1);
                     break;
             case 2: baseFaits.ajouterEnsFaits(ligne,1);
                     break;
@@ -239,17 +243,17 @@ void SystemeExpert::chargerSE(std::ifstream & file){
  *  \exception invalid_argument si le fichier texte n'est pas correctement ouvert.
  */
 int SystemeExpert::sauvegarderSE(std::ofstream & SortieFichier) const{
-   if (baseRegles==0 && baseFaits==0 && baseNouveauxFaits==0)
+  /* if (baseRegles==0 && baseFaits==0 && baseNouveauxFaits==0)
    {
       throw std::logic_error("sauvegarderSE:le systeme expert est vide!");
-   }
+   }*/
    if(SortieFichier)
    {
-     for (int i=1; i <= baseRegles.cpt; i++)// boucle qui parcours tous les elements de baseRegles.
+     for (int i=1; i <= baseRegles.taille(); i++)// boucle qui parcours tous les elements de baseRegles.
      {
-           baseRegles.element(i).premisses.ecrireEnsFaits(SortieFichier);
+           baseRegles.element(i).GetPremisses()->ecrireEnsFaits(SortieFichier);
            SortieFichier << "!>" << std::endl; // marque la fin des premisses pour la regle N.
-           baseRegles.element(i).conclusions.ecrireEnsFaits(SortieFichier);
+           baseRegles.element(i).GetConclusions()->ecrireEnsFaits(SortieFichier);
            SortieFichier << "!%" << std::endl; // marque la fin des conclusions pour la regle N.
      }
      SortieFichier << "!!" << std::endl; // marque la fin des regles.
@@ -281,23 +285,23 @@ int SystemeExpert::sauvegarderSE(std::ofstream & SortieFichier) const{
  *  \exception logic_error si la base de r�gles est vide.
  */
 ListeCirculaire<Regle> SystemeExpert::chainageAvant(){
-   if (baseRegles==0)
+   if (baseRegles.estVide())//gestion d'erreur
    {
          throw std::logic_error("chainageAvant:la base de regles est vide");
    }
-   if (baseFaits==0)
+   if (baseFaits.videEnsFaits())//gestion d'erreur
    {
           throw std::logic_error("chainageAvant:la base de faits est vide");
    }
    while (baseNouveauxFaits==0){
-      for(int i=1; i<=baseRegles.cpt ; i++)// parcours toutes les règles
+      for(int i=1; i<=baseRegles.taille() ; i++)// parcours toutes les règles
       {
-         for(int j=1; j<=baseRegles.element(i).premisses.cpt; j++)  // parcours toutes les premisses
+         for(int j=1; j<=baseRegles.element(i).GetPremisses()->cardinaliteEnsFaits(); j++)  // parcours toutes les premisses
          {
-            TypeFait courant = baseRegles.element(i).premisses.elementEnsFaits(j); // on donne la valeur courante de type Fait a courant.
+            TypeFait courant = baseRegles.element(i).GetPremisses()->elementEnsFaits(j); // on donne la valeur courante de type Fait a courant.
             if(baseFaits.appartientEnsFaits(courant))// compare les premisses avec les la base de fait.
             {
-               if(j<baseRegles.element(i).premisses.cpt) // on continue le parcours !
+               if(j<baseRegles.element(i).GetPremisses()->cardinaliteEnsFaits()) // on continue le parcours !
                {
                   continue;
                }
@@ -306,7 +310,7 @@ ListeCirculaire<Regle> SystemeExpert::chainageAvant(){
             {
                break; // pour sortir du parcours des premisses. jump vers la prochaine regle.
             }
-            TypeFait assertion = baseRegles.element(i).premisses.elementEnsFaits(i);
+            TypeFait assertion = baseRegles.element(i).GetPremisses()->elementEnsFaits(i);
             if(!baseNouveauxFaits.liste.appartient(assertion))// on vérifie si l'assertion appartient deja a la liste.
             {
                baseNouveauxFaits.enfiler(assertion); // enfile le nouveauFaits dans la file.
@@ -315,7 +319,7 @@ ListeCirculaire<Regle> SystemeExpert::chainageAvant(){
       }// fin for qui parcours toutes les règles
    }
 
-   return 0;
+   return baseRegles;
 }
 
 }
