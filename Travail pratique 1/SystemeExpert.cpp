@@ -49,14 +49,6 @@ SystemeExpert::~SystemeExpert(){
 SystemeExpert::SystemeExpert(const SystemeExpert & source){
    baseRegles=source.baseRegles; // on fais appelle a la surchage de l'operateur = de la classe ListeCirculaire.
    baseFaits=source.baseFaits; // on fais appelle a la surchage de l'operateur = de la classe EnsembleFaits.
-   TypeFait courant;
-   for (int k = 1; k <= source.baseNouveauxFaits.taille(); k++)
-   {
-      courant = source.getBaseNouveauxFaits()->defiler();
-      baseNouveauxFaits.enfiler(courant);
-      source.getBaseNouveauxFaits()->enfiler(courant);
-
-   }
    // bad_alloc sera retourner par les méthodes de surchage des type plushaut.
 }
 
@@ -78,7 +70,6 @@ SystemeExpert::SystemeExpert(const SystemeExpert & source){
 SystemeExpert & SystemeExpert::operator = (const SystemeExpert & source){
    baseRegles=source.baseRegles; // on fais appelle a la surchage de l'operateur = de la classe ListeCirculaire.
    baseFaits=source.baseFaits; // on fais appelle a la surchage de l'operateur = de la classe EnsembleFaits.
-  // baseNouveauxFaits.liste = source.baseNouveauxFaits.liste;// on fais appelle a la surchage de l'operateur = de la classe ListeCirculaire.
    // bad_alloc sera retourner par les méthodes de surchage des type plushaut.
    return (*this);
 }
