@@ -1,17 +1,17 @@
 /**
  * \file SystemeExpert.h
- * \brief Classe définissant le système expert.
+ * \brief Classe dï¿½finissant le systï¿½me expert.
  * \author Mondher Bouden
  * \version 0.1
- * \date février 2014
+ * \date fï¿½vrier 2014
  *
- * Ce fichier contient l'interface d'un systeme expert permettant à partir 
- * de prémisses de trouver des conclusions qui permettent finalement d'affirmer
- * ou d'infirmer des réponses.
- * Le système expert emploie les définitions de l'ensemble de règles et de
+ * Ce fichier contient l'interface d'un systeme expert permettant ï¿½ partir 
+ * de prï¿½misses de trouver des conclusions qui permettent finalement d'affirmer
+ * ou d'infirmer des rï¿½ponses.
+ * Le systï¿½me expert emploie les dï¿½finitions de l'ensemble de rï¿½gles et de
  * l'ensemble de faits.
- * A partir d'une comparaison systématique des faits aux règles connues,
- * le système peut déduire des faits nouveaux.
+ * A partir d'une comparaison systï¿½matique des faits aux rï¿½gles connues,
+ * le systï¿½me peut dï¿½duire des faits nouveaux.
 */
 
 #ifndef _SYSTEMEEXPERT_H
@@ -25,7 +25,7 @@
 /** 
  *  \namespace tp1
  *
- *  Espace de nommage regroupant les classes nécessaires pour le TP1.
+ *  Espace de nommage regroupant les classes nï¿½cessaires pour le TP1.
  */
 namespace tp1
 {
@@ -33,57 +33,57 @@ namespace tp1
 	/** 
 	 *  \class SystemeExpert
 	 *
-	 *  \brief Classe représentant un système expert.
+	 *  \brief Classe reprï¿½sentant un systï¿½me expert.
 	 *
-	 *  La classe gère un système expert à l'aide d'une file, d'une liste circulaire et d'un ensemble de faits.
+	 *  La classe gï¿½re un systï¿½me expert ï¿½ l'aide d'une file, d'une liste circulaire et d'un ensemble de faits.
 	 */
 	class SystemeExpert{
 
 	  public:
 
 		/**
-		 *  \brief Constructeur par défaut
+		 *  \brief Constructeur par dï¿½faut
 		 *
-		 *  \post Une instance de la classe SystemeExpert est initialisée.
+		 *  \post Une instance de la classe SystemeExpert est initialisï¿½e.
 		 */
 		SystemeExpert();
 
 		/**
 		 *  \brief Destructeur
 		 *
-		 *  \post L'instance de EnsembleFaits est détruite.
+		 *  \post L'instance de EnsembleFaits est dï¿½truite.
 		 */
 		~SystemeExpert();
 
 		/*!
 		 *  \brief Constructeur de copie
 		 *
-		 *  \post Une copie profonde du système expert source est utilisée pour initialiser la nouvelle instance.
+		 *  \post Une copie profonde du systï¿½me expert source est utilisï¿½e pour initialiser la nouvelle instance.
 		 *
-		 *  \exception bad_alloc s'il manque de mémoire.
+		 *  \exception bad_alloc s'il manque de mï¿½moire.
 		 */
 		SystemeExpert(const SystemeExpert &);
 
 		/**                       
-		 *  \brief Surcharge de l'opérateur = (effectue une copie profonde).
+		 *  \brief Surcharge de l'opï¿½rateur = (effectue une copie profonde).
 		 * 
-		 *  \pre Les deux systemeExperts ont été déclarés.
+		 *  \pre Les deux systemeExperts ont ï¿½tï¿½ dï¿½clarï¿½s.
 		 *
-		 *  \post SystemeExpert est une copie profonde du système expert donné en entrée.
+		 *  \post SystemeExpert est une copie profonde du systï¿½me expert donnï¿½ en entrï¿½e.
 		 * 
-		 *  \exception bad_alloc s'il manque de mémoire.
+		 *  \exception bad_alloc s'il manque de mï¿½moire.
 		 */
 		SystemeExpert & operator = (const SystemeExpert &);
 
 		/**                       
-		 *  \brief Affiche le système expert dans un flux de sortie.
-		 *  \brief "Friend" pour permettre d'utiliser les données privées pour faire son travail.
+		 *  \brief Affiche le systï¿½me expert dans un flux de sortie.
+		 *  \brief "Friend" pour permettre d'utiliser les donnï¿½es privï¿½es pour faire son travail.
 		 * 
 		 *  \pre SystemeExpert est valide.
 		 *
-		 *  \post SystemeExpert est inchangé.
+		 *  \post SystemeExpert est inchangï¿½.
 		 *
-		 *  Ne pas toucher pas à cette méthode !
+		 *  Ne pas toucher pas ï¿½ cette mï¿½thode !
 		 */
 		friend std::ostream & operator << (std::ostream & os, const SystemeExpert & se)
 		{
@@ -93,34 +93,34 @@ namespace tp1
 		}
 
 		/**                       
-		 *  \brief Permet d'ajouter une règle (déjà créée et initialisée) au système expert.
+		 *  \brief Permet d'ajouter une rï¿½gle (dï¿½jï¿½ crï¿½ï¿½e et initialisï¿½e) au systï¿½me expert.
 		 * 
-		 *  \pre La règle est créée et initialisée.
+		 *  \pre La rï¿½gle est crï¿½ï¿½e et initialisï¿½e.
 		 *
-		 *  \post La règle est ajoutée au système expert.
+		 *  \post La rï¿½gle est ajoutï¿½e au systï¿½me expert.
 		 * 
-		 *  \exception bad_alloc s'il manque de mémoire.
+		 *  \exception bad_alloc s'il manque de mï¿½moire.
 		 */
 		void ajouterRegleSE(const Regle &);
 
 		/**                       
-		 *  \brief Permet d'ajouter un fait (déjà créé et initialisé) au système expert
+		 *  \brief Permet d'ajouter un fait (dï¿½jï¿½ crï¿½ï¿½ et initialisï¿½) au systï¿½me expert
 		 * 
-		 *  \pre Le fait est créé et initialisé.
+		 *  \pre Le fait est crï¿½ï¿½ et initialisï¿½.
 		 *
-		 *  \post Le fait est ajouté au système expert.
+		 *  \post Le fait est ajoutï¿½ au systï¿½me expert.
 		 * 
-		 *  \exception bad_alloc s'il manque de mémoire.
+		 *  \exception bad_alloc s'il manque de mï¿½moire.
 		 */
 		void ajouterFaitSE(const TypeFait &);
 
 		/**                       
-		 *  \brief Permet de charger un système expert à partir d'un fichier texte.
+		 *  \brief Permet de charger un systï¿½me expert ï¿½ partir d'un fichier texte.
 		 * 
-		 *  \pre Le fichier a été ouvert à l'aide de la méthode "open" préalablement à l'appel de la méthode.
+		 *  \pre Le fichier a ï¿½tï¿½ ouvert ï¿½ l'aide de la mï¿½thode "open" prï¿½alablement ï¿½ l'appel de la mï¿½thode.
 		 *  \pre Le fichier a le bon format.
 		 *
-		 *  \post Le système expert est chargé.
+		 *  \post Le systï¿½me expert est chargï¿½.
 		 *  \post Le fichier est encore ouvert.
 		 * 
 		 *  \exception logic_error si le fichier texte est vide.
@@ -131,8 +131,8 @@ namespace tp1
 		 *	Regle_1_Premisse_1		|
 		 *	Regle_1_Premisse_2		|
 		 *	...						|
-		 *	Regle_1_Premisse_N		| PREMIÈRE
-		 *	!>						| RÈGLE
+		 *	Regle_1_Premisse_N		| PREMIï¿½RE
+		 *	!>						| Rï¿½GLE
 		 *	Regle_1_Conclusion_1	|
 		 *	Regle_1_Conclusion_2	|
 		 *	...						|
@@ -140,8 +140,8 @@ namespace tp1
 		 *	!%
 		 *	Regle_2_Premisse_1		|
 		 *	...						|
-		 *	Regle_2_Premisse_N		| DEUXIÈME
-		 *	!>						| RÈGLE
+		 *	Regle_2_Premisse_N		| DEUXIï¿½ME
+		 *	!>						| Rï¿½GLE
 		 *	Regle_2_Conclusion_1	|
 		 *	...						|
 		 *	Regle_2_Conclusion_N	|
@@ -150,8 +150,8 @@ namespace tp1
 		 *	!%
 		 *	Regle_N_Premisse_1		|
 		 *	...						|
-		 *	Regle_N_Premisse_N		| N ième
-		 *	!>						| RÈGLE
+		 *	Regle_N_Premisse_N		| N iï¿½me
+		 *	!>						| Rï¿½GLE
 		 *	Regle_N_Conclusion_1	|
 		 *	...						|
 		 *	Regle_N_Conclusion_N	|
@@ -164,53 +164,53 @@ namespace tp1
 		void chargerSE(std::ifstream &);
 
 		/**                       
-		 *  \brief Permet de sauvegarder le système expert dans un fichier texte.
+		 *  \brief Permet de sauvegarder le systï¿½me expert dans un fichier texte.
 		 * 
-		 *  \pre Le fichier a été ouvert à l'aide de la méthode "open" préalablement à l'appel de la méthode.
+		 *  \pre Le fichier a ï¿½tï¿½ ouvert ï¿½ l'aide de la mï¿½thode "open" prï¿½alablement ï¿½ l'appel de la mï¿½thode.
 		 *
-		 *  \post Le système expert est chargé.
+		 *  \post Le systï¿½me expert est chargï¿½.
 		 *  \post Le fichier est encore ouvert.
 		 *  \post Le fichier a le bon format.
-		 *  \post Le nombre de faits établis dans le système expert est retourné.
+		 *  \post Le nombre de faits ï¿½tablis dans le systï¿½me expert est retournï¿½.
 		 *
-		 *  \exception logic_error si le système expert est vide.
+		 *  \exception logic_error si le systï¿½me expert est vide.
 		 *  \exception invalid_argument si le fichier texte n'est pas correctement ouvert.
 		 */
 		int sauvegarderSE(std::ofstream &) const;
 
 		/**                       
-		 *  \brief Permet de saturer la base de faits du système expert en retrouvant les faits 
-		 *  \brief qui peuvent être déduits de la base de faits du système et en se basant sur
-		 *  \brief les règles de celui-ci.
+		 *  \brief Permet de saturer la base de faits du systï¿½me expert en retrouvant les faits 
+		 *  \brief qui peuvent ï¿½tre dï¿½duits de la base de faits du systï¿½me et en se basant sur
+		 *  \brief les rï¿½gles de celui-ci.
 		 *
-		 *  \pre Le système expert contient des faits et des règles.
+		 *  \pre Le systï¿½me expert contient des faits et des rï¿½gles.
 		 *
-		 *  \post Une liste circulaire contenant les règles qui ont permis de déterminer de nouveaux faits est retournée.
-		 *  \post La base des nouveaux faits est modifiée.
+		 *  \post Une liste circulaire contenant les rï¿½gles qui ont permis de dï¿½terminer de nouveaux faits est retournï¿½e.
+		 *  \post La base des nouveaux faits est modifiï¿½e.
 		 *
 		 *  \exception logic_error si la base de faits est vide.
-		 *  \exception logic_error si la base de règles est vide.
+		 *  \exception logic_error si la base de rï¿½gles est vide.
 		 */
 		ListeCirculaire<Regle> chainageAvant();
 
 		/**                       
-		 *  \brief Méthode récursive qui permet de démontrer la véracité d'une hypothèse donnée
-		 *  \brief en se basant sur les faits et les règles du système expert. 
+		 *  \brief Mï¿½thode rï¿½cursive qui permet de dï¿½montrer la vï¿½racitï¿½ d'une hypothï¿½se donnï¿½e
+		 *  \brief en se basant sur les faits et les rï¿½gles du systï¿½me expert. 
 		 *
-		 *  \pre Le système expert contient des faits et des règles.
+		 *  \pre Le systï¿½me expert contient des faits et des rï¿½gles.
 		 *
-		 *  \post Si l'hypothèse est fausse, FAUX est retournée dans le booléen.
-		 *  \post Si l'hypothèse est démontrée, VRAI est retournée dans le booléen.
-		 *  \post Si l'hypothèse est démontrée, une liste circulaire contenant les règles qui ont permis de déterminer de nouveaux faits est retournée.
-		 *  \post Si l'hypothèse est démontrée, la base des nouveaux faits est modifiée.
+		 *  \post Si l'hypothï¿½se est fausse, FAUX est retournï¿½e dans le boolï¿½en.
+		 *  \post Si l'hypothï¿½se est dï¿½montrï¿½e, VRAI est retournï¿½e dans le boolï¿½en.
+		 *  \post Si l'hypothï¿½se est dï¿½montrï¿½e, une liste circulaire contenant les rï¿½gles qui ont permis de dï¿½terminer de nouveaux faits est retournï¿½e.
+		 *  \post Si l'hypothï¿½se est dï¿½montrï¿½e, la base des nouveaux faits est modifiï¿½e.
 		 *
 		 *  \exception logic_error si la base de faits est vide.
-		 *  \exception logic_error si la base de règles est vide.
+		 *  \exception logic_error si la base de rï¿½gles est vide.
 		 */
 		ListeCirculaire<Regle> chainageArriere (const TypeFait &, bool &);
 
 		/**                       
-		 *  \brief Accesseur pour la base de règles.
+		 *  \brief Accesseur pour la base de rï¿½gles.
 		 */
 		ListeCirculaire<Regle> * getBaseRegles () {return &baseRegles;}
 
@@ -228,11 +228,11 @@ namespace tp1
 
 	  private:
 
-		ListeCirculaire<Regle> baseRegles;		//Contient toutes les règles connues du système expert
-		EnsembleFaits baseFaits;				//Contient tous les faits connus du système expert
-		File<TypeFait> baseNouveauxFaits;		//Contient uniquement les nouveaux faits déduits en saturant le système expert
+		ListeCirculaire<Regle> baseRegles;		//Contient toutes les rï¿½gles connues du systï¿½me expert
+		EnsembleFaits baseFaits;				//Contient tous les faits connus du systï¿½me expert
+		File<TypeFait> baseNouveauxFaits;		//Contient uniquement les nouveaux faits dï¿½duits en saturant le systï¿½me expert
 
-	   //Ajouter ici des fonctions utilitaires si nécessaire.
+	   //Ajouter ici des fonctions utilitaires si nï¿½cessaire.
 
 	};
 

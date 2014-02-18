@@ -49,10 +49,14 @@ SystemeExpert::~SystemeExpert(){
 SystemeExpert::SystemeExpert(const SystemeExpert & source){
    baseRegles=source.baseRegles; // on fais appelle a la surchage de l'operateur = de la classe ListeCirculaire.
    baseFaits=source.baseFaits; // on fais appelle a la surchage de l'operateur = de la classe EnsembleFaits.
-   /*for (unsigned int i = 1; i <= source.baseNouveauxFaits->taille(); i++)
+   TypeFait courant;
+   for (int k = 1; k <= source.baseNouveauxFaits.taille(); k++)
    {
-      baseNouveauxFaits.enfiler(const & source.baseNouveauxFaits.defiler());
-   }*/
+      courant = source.getBaseNouveauxFaits()->defiler();
+      baseNouveauxFaits.enfiler(courant);
+      source.getBaseNouveauxFaits()->enfiler(courant);
+
+   }
    // bad_alloc sera retourner par les méthodes de surchage des type plushaut.
 }
 
@@ -304,7 +308,7 @@ ListeCirculaire<Regle> SystemeExpert::chainageAvant(){
             break; // pour sortir du parcours des premisses. jump vers la prochaine regle.
          }
          TypeFait assertion = baseRegles.element(i).GetPremisses()->elementEnsFaits(i);
-         for(unsigned int k=1; k <= baseNouveauxFaits.taille(); k++){
+         for(int k=1; k <= baseNouveauxFaits.taille(); k++){
             if(baseNouveauxFaits.defiler() == assertion){
 
             }

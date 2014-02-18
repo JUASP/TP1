@@ -1,12 +1,12 @@
 /**
 *  \file Regle.h
-*  \brief Classe définissant une règle.
+*  \brief Classe dï¿½finissant une rï¿½gle.
 *  \author Mondher Bouden
 *  \version 0.1
-*  \date Février 2014
+*  \date Fï¿½vrier 2014
 *
-*  Cette classe définit une règle.
-*  Une règle est composée d'un EnsembleFaits pour les prémisses et d'un autre pour les conclusions.
+*  Cette classe dï¿½finit une rï¿½gle.
+*  Une rï¿½gle est composï¿½e d'un EnsembleFaits pour les prï¿½misses et d'un autre pour les conclusions.
 */
 
 #ifndef _REGLE_H
@@ -20,7 +20,7 @@
 /** 
 *  \namespace tp1
 *
-*  Espace de nommage regroupant les classes nécessaires pour le TP1.
+*  Espace de nommage regroupant les classes nï¿½cessaires pour le TP1.
 */
 namespace tp1
 {
@@ -28,76 +28,76 @@ namespace tp1
 	/** 
 	*  \class Regle
 	*
-	*  \brief Classe représentant une règle.
+	*  \brief Classe reprï¿½sentant une rï¿½gle.
 	*
-	*  La classe gère une règle en utilisant des ensemble de faits.
+	*  La classe gï¿½re une rï¿½gle en utilisant des ensemble de faits.
 	*/
 	class Regle{
 
 	public:
 
 		/**
-		*  \brief Constructeur par défaut
+		*  \brief Constructeur par dï¿½faut
 		*
-		*  \post Une instance de la classe Regle est initialisée.
+		*  \post Une instance de la classe Regle est initialisï¿½e.
 		*/
 		Regle();
 
 		/*!
 		*  \brief Constructeur de copie
 		*
-		*  \post Une copie profonde de la règle source est utilisée pour initialiser la nouvelle instance.
+		*  \post Une copie profonde de la rï¿½gle source est utilisï¿½e pour initialiser la nouvelle instance.
 		*/
 		Regle(const Regle&);
 
 		/**
 		*  \brief Destructeur
 		*
-		*  \post L'instance de Regle est détruite.
+		*  \post L'instance de Regle est dï¿½truite.
 		*/
 		~Regle();
 
 		/**                       
-		*  \brief Surcharge de l'opérateur = (effectue une copie profonde).
+		*  \brief Surcharge de l'opï¿½rateur = (effectue une copie profonde).
 		* 
-		*  \pre Les deux règles ont été déclarés.
-		*  \pre Les deux règles sont du même types.
+		*  \pre Les deux rï¿½gles ont ï¿½tï¿½ dï¿½clarï¿½s.
+		*  \pre Les deux rï¿½gles sont du mï¿½me types.
 		*
-		*  \post Règle est une copie profonde de la règle donnée en entrée.
+		*  \post Rï¿½gle est une copie profonde de la rï¿½gle donnï¿½e en entrï¿½e.
 		*/
 		Regle& operator = (const Regle&);
 
 		/**                       
-		*  \brief Surcharge de l'opérateur == (pour comparer deux règles).
+		*  \brief Surcharge de l'opï¿½rateur == (pour comparer deux rï¿½gles).
 		* 
-		*  \pre Les deux règles ont été déclarés.
-		*  \pre Les deux règles sont du même types.
+		*  \pre Les deux rï¿½gles ont ï¿½tï¿½ dï¿½clarï¿½s.
+		*  \pre Les deux rï¿½gles sont du mï¿½me types.
 		*
-		*  \post Le booléen contient true si les deux rèlges sont égales, false sinon.
+		*  \post Le boolï¿½en contient true si les deux rï¿½lges sont ï¿½gales, false sinon.
 		* 
 		*/
 		bool operator == (const Regle&);
 
 		/**                       
-		*  \brief Surcharge de l'opérateur != (pour comparer deux règles).
+		*  \brief Surcharge de l'opï¿½rateur != (pour comparer deux rï¿½gles).
 		* 
-		*  \pre Les deux règles ont été déclarés.
-		*  \pre Les deux règles sont du même types.
+		*  \pre Les deux rï¿½gles ont ï¿½tï¿½ dï¿½clarï¿½s.
+		*  \pre Les deux rï¿½gles sont du mï¿½me types.
 		*
-		*  \post Le booléen contient false si les deux rèlges sont égales, true sinon.
+		*  \post Le boolï¿½en contient false si les deux rï¿½lges sont ï¿½gales, true sinon.
 		*
 		*/
 		bool operator != (const Regle&);
 
 		/**                       
-		*  \brief Affiche la règle dans un flux de sortie.
-		*  \brief "Friend" pour permettre d'utiliser les données privées pour faire son travail.
+		*  \brief Affiche la rï¿½gle dans un flux de sortie.
+		*  \brief "Friend" pour permettre d'utiliser les donnï¿½es privï¿½es pour faire son travail.
 		* 
 		*  \pre Regle est valide.
 		*
-		*  \post Regle est inchangée.
+		*  \post Regle est inchangï¿½e.
 		*
-		*	Ne pas toucher à cette méthode
+		*	Ne pas toucher ï¿½ cette mï¿½thode
 		*/
 		friend std::ostream& operator << (std::ostream& os, const Regle& r)
 		{
@@ -110,11 +110,11 @@ namespace tp1
 
 
 		/**                       
-		*  \brief Retourne le pointeur sur les prémisses pour pouvoir les modifier.
+		*  \brief Retourne le pointeur sur les prï¿½misses pour pouvoir les modifier.
 		* 
 		*  \pre Regle est valide.
 		*
-		*  \post Les prémisses peuvent être changées.
+		*  \post Les prï¿½misses peuvent ï¿½tre changï¿½es.
 		*/
 		EnsembleFaits * GetPremisses ();
 
@@ -123,33 +123,33 @@ namespace tp1
 		* 
 		*  \pre Regle est valide.
 		*
-		*  \post Les conclusions peuvent être changées.
+		*  \post Les conclusions peuvent ï¿½tre changï¿½es.
 		*/
 		EnsembleFaits * GetConclusions ();
 
 		/**                       
-		*  \brief Retourne la valeur du booléen.
+		*  \brief Retourne la valeur du boolï¿½en.
 		* 
 		*  \pre Regle est valide.
 		*
-		*  \post Regle est inchangée.
+		*  \post Regle est inchangï¿½e.
 		*/
 		bool GetUtilisee () const;
 
 		/**                       
-		*  \brief Permet de modifier la valeur du booléen.
+		*  \brief Permet de modifier la valeur du boolï¿½en.
 		* 
 		*  \pre Regle est valide.
 		*
-		*  \post La valeur du booléen est modifiée.
+		*  \post La valeur du boolï¿½en est modifiï¿½e.
 		*/ 
 		void SetUtilisee (const bool & flag);
 
 	private:
 
-		EnsembleFaits premisses;	// L’ensemble des prémisses d’une règle
-		EnsembleFaits conclusions;	// L’ensemble des conclusions d’une règle
-		bool utilisee;				// Sert à marquer la règle si nécessaire
+		EnsembleFaits premisses;	// Lï¿½ensemble des prï¿½misses dï¿½une rï¿½gle
+		EnsembleFaits conclusions;	// Lï¿½ensemble des conclusions dï¿½une rï¿½gle
+		bool utilisee;				// Sert ï¿½ marquer la rï¿½gle si nï¿½cessaire
 
 	};	// Fermeture de la classe Regle.
 

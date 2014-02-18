@@ -73,7 +73,7 @@ namespace tp1
 		*
 		*  \post File est inchang�e.
 		*/
-		unsigned int taille();
+		int taille() const;
 
 		/**                       
 		*  \brief Affiche la file dans un flux de sortie.

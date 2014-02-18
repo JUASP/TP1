@@ -42,8 +42,8 @@ namespace tp1
 		throw std::logic_error("Defiler: la file est vide");
 	}
 
-	template <typename T>
-	unsigned int File<T>::taille(){
+template <typename T>
+ int File<T>::taille() const{
 
 		return liste.taille();
 
