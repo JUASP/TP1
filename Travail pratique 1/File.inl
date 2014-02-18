@@ -20,7 +20,7 @@ namespace tp1
 	{
 		try
 		{
-			liste.ajouterFin(contenu);
+			liste.ajouter(contenu,1); // on ajoute au debut de la liste circulaire.
 		}
 		catch(std::exception& e)
 		{
@@ -34,7 +34,10 @@ namespace tp1
 	{
 		if(!liste.estVide())
 		{
-			return liste.enleverPos(liste.cpt = 1);
+		   T temporaire;
+		   temporaire = liste.element(liste.taille()); // on met l'element qui se trouve a la fin de la liste circulaire dans Temporaire.
+			liste.enleverPos(liste.taille()); // on retire l'élement qui est a la fin de la file. avec l'indice de la taille.
+			return temporaire; // on retourne l'element de type T.
 		}
 		throw std::logic_error("Defiler: la file est vide");
 	}

@@ -31,13 +31,6 @@ SystemeExpert::SystemeExpert(){
     *  \post L'instance de EnsembleFaits est d�truite.
     */
 SystemeExpert::~SystemeExpert(){
-   baseRegles.~ListeCirculaire();   // on fais appelle au destructeur de l'objet de type ListeCirculaire
-   baseFaits.~EnsembleFaits();         // on fais appelle au destructeur de l'objet de type EnsembleFait
-
-   for(unsigned int i = 1; i<=baseNouveauxFaits.taille();i++){
-      baseNouveauxFaits.defiler(); // on défile jusqua ce que la file soit vide
-   }
-
 }
 
 
@@ -56,10 +49,10 @@ SystemeExpert::~SystemeExpert(){
 SystemeExpert::SystemeExpert(const SystemeExpert & source){
    baseRegles=source.baseRegles; // on fais appelle a la surchage de l'operateur = de la classe ListeCirculaire.
    baseFaits=source.baseFaits; // on fais appelle a la surchage de l'operateur = de la classe EnsembleFaits.
-   for (unsigned int i = 1; i <= source.baseNouveauxFaits.taille(); i++)
+   /*for (unsigned int i = 1; i <= source.baseNouveauxFaits->taille(); i++)
    {
-      baseNouveauxFaits.enfiler(const source.baseNouveauxFaits.defiler());
-   }
+      baseNouveauxFaits.enfiler(const & source.baseNouveauxFaits.defiler());
+   }*/
    // bad_alloc sera retourner par les méthodes de surchage des type plushaut.
 }
 
@@ -81,7 +74,7 @@ SystemeExpert::SystemeExpert(const SystemeExpert & source){
 SystemeExpert & SystemeExpert::operator = (const SystemeExpert & source){
    baseRegles=source.baseRegles; // on fais appelle a la surchage de l'operateur = de la classe ListeCirculaire.
    baseFaits=source.baseFaits; // on fais appelle a la surchage de l'operateur = de la classe EnsembleFaits.
-   baseNouveauxFaits.liste = source.baseNouveauxFaits.liste;// on fais appelle a la surchage de l'operateur = de la classe ListeCirculaire.
+  // baseNouveauxFaits.liste = source.baseNouveauxFaits.liste;// on fais appelle a la surchage de l'operateur = de la classe ListeCirculaire.
    // bad_alloc sera retourner par les méthodes de surchage des type plushaut.
    return (*this);
 }
@@ -293,31 +286,38 @@ ListeCirculaire<Regle> SystemeExpert::chainageAvant(){
    {
           throw std::logic_error("chainageAvant:la base de faits est vide");
    }
-   while (baseNouveauxFaits==0){
-      for(int i=1; i<=baseRegles.taille() ; i++)// parcours toutes les règles
+   ListeCirculaire<Regle> reglesQuiOntPermis;
+   for(int i=1; i<=baseRegles.taille() ; i++)// parcours toutes les règles
+   {
+      for(int j=1; j<=baseRegles.element(i).GetPremisses()->cardinaliteEnsFaits(); j++)  // parcours toutes les premisses
       {
-         for(int j=1; j<=baseRegles.element(i).GetPremisses()->cardinaliteEnsFaits(); j++)  // parcours toutes les premisses
+         TypeFait courant = baseRegles.element(i).GetPremisses()->elementEnsFaits(j); // on donne la valeur courante de type Fait a courant.
+         if(baseFaits.appartientEnsFaits(courant))// compare les premisses avec les la base de fait.
          {
-            TypeFait courant = baseRegles.element(i).GetPremisses()->elementEnsFaits(j); // on donne la valeur courante de type Fait a courant.
-            if(baseFaits.appartientEnsFaits(courant))// compare les premisses avec les la base de fait.
+            if(j<baseRegles.element(i).GetPremisses()->cardinaliteEnsFaits()) // on continue le parcours !
             {
-               if(j<baseRegles.element(i).GetPremisses()->cardinaliteEnsFaits()) // on continue le parcours !
-               {
-                  continue;
-               }
+               continue;
             }
-            else
-            {
-               break; // pour sortir du parcours des premisses. jump vers la prochaine regle.
+         }
+         else
+         {
+            break; // pour sortir du parcours des premisses. jump vers la prochaine regle.
+         }
+         TypeFait assertion = baseRegles.element(i).GetPremisses()->elementEnsFaits(i);
+         for(unsigned int k=1; k <= baseNouveauxFaits.taille(); k++){
+            if(baseNouveauxFaits.defiler() == assertion){
+
             }
-            TypeFait assertion = baseRegles.element(i).GetPremisses()->elementEnsFaits(i);
-            if(!baseNouveauxFaits.liste.appartient(assertion))// on vérifie si l'assertion appartient deja a la liste.
-            {
-               baseNouveauxFaits.enfiler(assertion); // enfile le nouveauFaits dans la file.
-            }
-         }// fin for qui parcours toutes les elements de premisses.
-      }// fin for qui parcours toutes les règles
-   }
+         }
+
+         //if(!baseNouveauxFaits.liste.appartient(assertion))// on vérifie si l'assertion appartient deja a la liste.
+         {
+            baseNouveauxFaits.enfiler(assertion); // enfile le nouveauFaits dans la file.
+            reglesQuiOntPermis.ajouter(baseRegles.element(i),1);
+         }
+      }// fin for qui parcours toutes les elements de premisses.
+   }// fin for qui parcours toutes les règles
+
 
    return baseRegles;
 }

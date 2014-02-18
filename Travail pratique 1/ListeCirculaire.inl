@@ -213,10 +213,16 @@ void ListeCirculaire<T>:: ajouterFin(const T& element){
       try{
          elem  nouveau; //pour l'adresse de la nouvelle structure pour entreposer l'element
          nouveau = new Noeud(element);
+         cpt++; // On incrémente le compteur
+         if(dernier == 0) // cas ou la liste est vide
+         {
+            dernier = nouveau;
+            return;
+         }
          nouveau->suivant=dernier->suivant;
          dernier->suivant = nouveau;
          dernier = nouveau;
-         cpt++; // On incrémente le compteur
+
       }// fin try
       catch(std::exception& e){
          std::cerr << "ERREUR: " << e.what() << std::endl;
