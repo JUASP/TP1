@@ -8,6 +8,7 @@
  */
 
 #include "SystemeExpert.h"
+#include <cstring>
 
 namespace tp1
 {
@@ -178,30 +179,41 @@ void SystemeExpert::chargerSE(std::ifstream & file){
        int indice = 0; // 0 pour les premisses 1 pour les conclusions et 2 pour les faits.
        while (getline(file,ligne))
        {
-          if(ligne == "!>"){ // indice pour commencer les conclusions
+          std::cout << "la ligne suivante est lu: ";
+          std::cout << ligne << std::endl;
+
+          if(ligne == "!>\r"){ // indice pour commencer les conclusions
              indice = 1;
+             std::cout << "l'indice vaut : " << indice << " apres avoir lu un !>"<< std::endl;
              continue;
           }// fin if
-          if(ligne == "!%"){// indice pour les premisses
+          if(ligne == "!%\r"){// indice pour les premisses
              indice = 0;
+             std::cout << "l'indice vaut : " << indice << " apres avoir lu un !%"<< std::endl;
              baseRegles.ajouter(regleLue,1); // ajoute la règle N a baseRegles
-             regleLue.~Regle(); // une fois la règle ajoute a baseRegles on la supprime.
+             std::cout << baseRegles.taille() << std::endl;
              Regle regleLue; // declare une nouvelle regle.
              continue;
           }//fin if
-          if (ligne ==  "!!"){// indice pour les faits.
+          if (ligne == "!!\r"){// indice pour les faits.
              indice = 2;
+             std::cout << "l'indice vaut : " << indice << " apres avoir lu un !!"<< std::endl;
              baseRegles.ajouter(regleLue,1); // ajoute la règle N a baseRegles
-             regleLue.~Regle();
              continue;
           }// fin if
           switch(indice)
           {
             case 0: regleLue.GetPremisses()->ajouterEnsFaits(ligne,1);
+                     std::cout << "la ligne suivante s'ajoute dans premisse: ";
+                     std::cout << ligne << std::endl;
                     break;
             case 1: regleLue.GetConclusions()->ajouterEnsFaits(ligne,1);
+                    std::cout << "la ligne suivante s'ajoute dans conclusion: ";
+                    std::cout << ligne << std::endl;
                     break;
             case 2: baseFaits.ajouterEnsFaits(ligne,1);
+                    std::cout << "la ligne suivante add baseFaits: ";
+                    std::cout << ligne << std::endl;
                     break;
           }// fin switch
 
