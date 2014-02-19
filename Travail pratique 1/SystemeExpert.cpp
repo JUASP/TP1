@@ -192,13 +192,14 @@ void SystemeExpert::chargerSE(std::ifstream & file){
              std::cout << "l'indice vaut : " << indice << " apres avoir lu un !%"<< std::endl;
              baseRegles.ajouter(regleLue,1); // ajoute la règle N a baseRegles
              std::cout << baseRegles.taille() << std::endl;
-             Regle regleLue; // declare une nouvelle regle.
+             regleLue = Regle(); // declare une nouvelle regle.
              continue;
           }//fin if
           if (ligne == "!!\r"){// indice pour les faits.
              indice = 2;
              std::cout << "l'indice vaut : " << indice << " apres avoir lu un !!"<< std::endl;
              baseRegles.ajouter(regleLue,1); // ajoute la règle N a baseRegles
+             std::cout << baseRegles.taille() << std::endl;
              continue;
           }// fin if
           switch(indice)
