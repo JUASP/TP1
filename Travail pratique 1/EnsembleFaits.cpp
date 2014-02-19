@@ -173,30 +173,33 @@ void EnsembleFaits::enleverEl(const TypeFait& element)
       throw std::logic_error("EnleverEl:l'element n'existe pas dans la liste"); // lance une erreur
    }
    else
+      std::cout << cpt << std::endl;
       {
          if(cpt == 1) // cas ou on a un seul element dans la liste
          {
             sommetG = 0;
             sommetD = 0;
+            std::cout << "sommet G D a 0" << std::endl;
          }
-         if (sommetG == trouve) // cas ou l'element est le premier
+         else if (sommetG == trouve) // cas ou l'element est le premier
          {
-            sommetG = sommetG->suivant;
-            sommetG->precedent = 0;
-            trouve->suivant = 0;
-         }
+               sommetG = sommetG->suivant;
+               sommetG->precedent = 0;
+               trouve->suivant = 0;
+
+          }
          else if (sommetD == trouve)// cas ou l'element est le dernier
          {
-            sommetD = sommetD->precedent;
-            sommetD->suivant = 0;
-            trouve->precedent = 0;
-         }
+               sommetD = sommetD->precedent;
+               sommetD->suivant = 0;
+               trouve->precedent = 0;
 
-         else // cas ou il est ailleur
-         {
-            pred->suivant = trouve->suivant;
-         }
-
+          }
+          else // cas ou il est ailleur
+          {
+               std::cout << "dernier else" << std::endl;
+               pred->suivant = trouve->suivant;
+          }
          trouve->suivant = 0;
          delete trouve;
          cpt--; // on décremente la taille

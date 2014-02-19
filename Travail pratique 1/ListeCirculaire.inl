@@ -216,9 +216,11 @@ void ListeCirculaire<T>:: ajouterFin(const T& element){
          cpt++; // On incrémente le compteur
          if(dernier == 0) // cas ou la liste est vide
          {
+            nouveau->suivant = nouveau;
             dernier = nouveau;
             return;
          }
+
          nouveau->suivant=dernier->suivant;
          dernier->suivant = nouveau;
          dernier = nouveau;

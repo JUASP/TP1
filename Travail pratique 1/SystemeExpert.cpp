@@ -49,6 +49,7 @@ SystemeExpert::~SystemeExpert(){
 SystemeExpert::SystemeExpert(const SystemeExpert & source){
    baseRegles=source.baseRegles; // on fais appelle a la surchage de l'operateur = de la classe ListeCirculaire.
    baseFaits=source.baseFaits; // on fais appelle a la surchage de l'operateur = de la classe EnsembleFaits.
+   //baseNouveauxFaits.liste = source.baseNouveauxFaits.liste; // on fais appelle a la surchage de l'operateur = de la classe ListeCirculaire.
    // bad_alloc sera retourner par les méthodes de surchage des type plushaut.
 }
 
@@ -281,7 +282,8 @@ ListeCirculaire<Regle> SystemeExpert::chainageAvant(){
    {
           throw std::logic_error("chainageAvant:la base de faits est vide");
    }
-   ListeCirculaire<Regle> reglesQuiOntPermis;
+
+
    for(int i=1; i<=baseRegles.taille() ; i++)// parcours toutes les règles
    {
       for(int j=1; j<=baseRegles.element(i).GetPremisses()->cardinaliteEnsFaits(); j++)  // parcours toutes les premisses
@@ -298,23 +300,42 @@ ListeCirculaire<Regle> SystemeExpert::chainageAvant(){
          {
             break; // pour sortir du parcours des premisses. jump vers la prochaine regle.
          }
-         TypeFait assertion = baseRegles.element(i).GetPremisses()->elementEnsFaits(i);
-         for(int k=1; k <= baseNouveauxFaits.taille(); k++){
-            if(baseNouveauxFaits.defiler() == assertion){
-
+         TypeFait assertion = baseRegles.element(i).GetConclusions()->elementEnsFaits(1);
+         TypeFait temp;
+         bool dejaExistante;
+         for(int k=1; k <= baseNouveauxFaits.taille(); k++)
+         {
+            temp = baseNouveauxFaits.defiler(); // on retire temporairement un element de la file. et on le stock dans temp
+            baseNouveauxFaits.enfiler(temp);// on replace l'element dans la file
+            if(temp != assertion)// comparaison entre les elements de la file et la nouvelle assertion.
+            {
+              dejaExistante = false;
+            }
+            else
+            {
+               dejaExistante = true;
+               break; // elle est dans la fille ( on na la rajoute pas)
             }
          }
-
-         //if(!baseNouveauxFaits.liste.appartient(assertion))// on vérifie si l'assertion appartient deja a la liste.
-         {
-            baseNouveauxFaits.enfiler(assertion); // enfile le nouveauFaits dans la file.
-            reglesQuiOntPermis.ajouter(baseRegles.element(i),1);
+         if(dejaExistante == false){
+            baseNouveauxFaits.enfiler(assertion);
+            baseRegles.element(i).SetUtilisee(true); // on met a jour la regle pour dire quelle a ete utilise.
          }
       }// fin for qui parcours toutes les elements de premisses.
    }// fin for qui parcours toutes les règles
 
 
-   return baseRegles;
+   ListeCirculaire<Regle> reglesQuiOntPermis;
+   for(int i=1;i<= baseRegles.taille(); i++)// parcours toutes les regles de baseRegles
+   {
+      if(baseRegles.element(i).GetUtilisee()==true)//verifie si regle a ete utiliser
+      {
+         reglesQuiOntPermis.ajouter(baseRegles.element(i),1); // ajoute la regle utiliser dans la liste circulaire reglesQuiOntPermis
+      }//fin if pour savoir si la regle a ete utiliser
+   }// fin for qui parcours toutes les regles de baseRegles
+
+
+   return reglesQuiOntPermis;
 }
 
 }

@@ -1,10 +1,10 @@
 /**
  * \file Principal.cpp
- * \brief Ce fichier contient un main permettant de tester le système expert 
- * \brief en utilisant un menu contenant des choix proposés à l'utilisateur.
+ * \brief Ce fichier contient un main permettant de tester le systï¿½me expert 
+ * \brief en utilisant un menu contenant des choix proposï¿½s ï¿½ l'utilisateur.
  * \author Mondher Bouden
  * \version 0.1
- * \date février 2014
+ * \date fï¿½vrier 2014
  * 
  */
 
@@ -18,22 +18,22 @@ using namespace std;
  *  \fn int main (void)
  *  \brief Fonction principale.
  *
- *  Un main() pour utiliser le système expert.
- *  \return 0 - Arrêt normal du programme.
+ *  Un main() pour utiliser le systï¿½me expert.
+ *  \return 0 - Arrï¿½t normal du programme.
  */
 
 int main()
 {
-	int nb = 1;					//Choix de l'utilisateur dans le menu initialisé à 1.
-	tp1::SystemeExpert se1;		//Le système expert utilisé pour les les tests de base.
-	tp1::SystemeExpert se2;		//Le système expert utilisé principalement pour le chaînage avant.
-	tp1::SystemeExpert se3;		//Le système expert utilisé principalement pour le chaînage arrière.
-	tp1::Regle re;				//Une règle pour envoyer à ajouterRegleSE.
-	tp1::TypeFait fait;			//Un fait pour envoyer à ajouterEnsFaits.
-	ifstream EntreeFichier1, EntreeFichier2;	//Flux d'entrée
+	int nb = 1;					//Choix de l'utilisateur dans le menu initialisï¿½ ï¿½ 1.
+	tp1::SystemeExpert se1;		//Le systï¿½me expert utilisï¿½ pour les les tests de base.
+	tp1::SystemeExpert se2;		//Le systï¿½me expert utilisï¿½ principalement pour le chaï¿½nage avant.
+	tp1::SystemeExpert se3;		//Le systï¿½me expert utilisï¿½ principalement pour le chaï¿½nage arriï¿½re.
+	tp1::Regle re;				//Une rï¿½gle pour envoyer ï¿½ ajouterRegleSE.
+	tp1::TypeFait fait;			//Un fait pour envoyer ï¿½ ajouterEnsFaits.
+	ifstream EntreeFichier1, EntreeFichier2;	//Flux d'entrï¿½e
 	ofstream SortieFichier1, SortieFichier2;	//Flux de sortie
-	tp1::ListeCirculaire<tp1::Regle> er;	//Une liste de règle pour le retour des chaînages (avant et arrière).
-	bool test = false;	// Pour tester la véracité d'une hypothèse par chaînage arrière
+	tp1::ListeCirculaire<tp1::Regle> er;	//Une liste de rï¿½gle pour le retour des chaï¿½nages (avant et arriï¿½re).
+	//bool test = false;	// Pour tester la vï¿½racitï¿½ d'une hypothï¿½se par chaï¿½nage arriï¿½re
 
 	//Affichage du menu
 	cout << "------------------ Menu --------------------------------" << endl;
@@ -68,7 +68,7 @@ int main()
 			switch (nb) 
 			{
 				case 1:
-					//Ajouter une règle au systeme expert.
+					//Ajouter une rï¿½gle au systeme expert.
 					re.GetPremisses()->ajouterEnsFaits("a des poils",1);
 					re.GetConclusions()->ajouterEnsFaits("est un mammifere",1);
 					se1.ajouterRegleSE(re);
@@ -80,7 +80,7 @@ int main()
 					break;
 
 				case 2:
-					//Ajouter un fait à analyser au systeme expert.
+					//Ajouter un fait ï¿½ analyser au systeme expert.
 					fait = "a des poils";
 					se1.ajouterFaitSE(fait);
 					cout <<"Le fait suivant a ete ajoute: " << fait << endl;
@@ -130,7 +130,7 @@ int main()
 
 					break;
 
-				case 7:
+				/*case 7:
 					//Verifier une hypothese a partir de la base de regles.
 
 					//Commencer par charger un systeme expert depuis un fichier texte.
@@ -151,7 +151,7 @@ int main()
 						cout << "ERREUR: Fichier introuvable!" << endl;
 					EntreeFichier2.close();
 
-					break;
+					break;*/
 
 				case 8:
 					//Ecrire la base de faits dans un fichier texte.
@@ -199,7 +199,7 @@ int main()
 		}
 		catch(...)
 		{
-			cerr << "Problème grave non identifiable!" << endl;
+			cerr << "Problï¿½me grave non identifiable!" << endl;
 		}
 	}
 
