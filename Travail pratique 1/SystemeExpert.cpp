@@ -288,6 +288,7 @@ int SystemeExpert::sauvegarderSE(std::ofstream & SortieFichier) const{
  *  \exception logic_error si la base de r�gles est vide.
  */
 ListeCirculaire<Regle> SystemeExpert::chainageAvant(){
+   ListeCirculaire<Regle> reglesQuiOntPermis;
    if (baseRegles.estVide())//gestion d'erreur
    {
          throw std::logic_error("chainageAvant:la base de regles est vide");
@@ -334,32 +335,46 @@ ListeCirculaire<Regle> SystemeExpert::chainageAvant(){
          }
          if(dejaExistante == false){
             baseNouveauxFaits.enfiler(assertion);
-            std::cout << "valeur de VarI avant set: " << i << std::endl;
-            baseRegles.element(i).SetUtilisee(true); // on met a jour la regle pour dire quelle a ete utilise.
-            std::cout << "valeur de VarI apres set: " << i << std::endl;
-            std::cout << "la valeur du utilise apres le set: ";
-            std::cout << baseRegles.element(i).GetUtilisee() << std::endl;
+            reglesQuiOntPermis.ajouter(baseRegles.element(i),1);
          }
       }// fin for qui parcours toutes les elements de premisses.
    }// fin for qui parcours toutes les règles
-   ListeCirculaire<Regle> reglesQuiOntPermis;
-   std::cout << "apres les fors" << std::endl;
-   for(int x=1;x<= baseRegles.taille(); x++)// parcours toutes les regles de baseRegles
-   {
-      std::cout << "ds fort" << std::endl;
-      std::cout << baseRegles.element(x).GetUtilisee() << std::endl;
-
-      if(baseRegles.element(x).GetUtilisee())//verifie si regle a ete utiliser
-      {
-
-         reglesQuiOntPermis.ajouter(baseRegles.element(x),1); // ajoute la regle utiliser dans la liste circulaire reglesQuiOntPermis
-         std::cout << "regle use added " << std::endl;
-
-      }//fin if pour savoir si la regle a ete utiliser
-   }// fin for qui parcours toutes les regles de baseRegles
-
-
    return reglesQuiOntPermis;
 }
 
+
+
+
+/*
+ListeCirculaire<Regle> SystemeExpert::chainageArriere(const TypeFait & hypothese, bool & valide){
+
+ ListeCirculaire<Regle> reglesQuiOntPermis;
+
+ if (baseRegles.estVide())//gestion d'erreur
+ {
+       throw std::logic_error("chainageAvant:la base de regles est vide");
+ }
+ if (baseFaits.videEnsFaits())//gestion d'erreur
+ {
+  throw std::logic_error("chainageAvant:la base de faits est vide");
+ }
+
+ //boucle permettant de verifier les regles une a une
+ for(int i = 1; i <= baseRegles.element(i).GetConclusions()->cardinaliteEnsFaits(); i++)
+ {
+  //compare l'hypothese avec les conclusions de la base de regle
+  if(baseRegles.element(i).GetConclusions()->appartientEnsFaits(hypothese))
+  {
+    baseFaits.ajouterEnsFaits(baseRegles.element(i).GetConclusions()->elementEnsFaits(1), i); //si l'hypothese fait partie de la base de regle, alors on l'ajout dans la base de fait
+    baseRegles.element(i).SetUtilisee(true); //
+  }
+  else
+  {
+     TypeFait yoyo;
+    SystemeExpert::chainageArriere(yoyo, true);
+  }
+ }//fin for
+ return reglesQuiOntPermis;
+}//fin chainage arriere
+*/
 }
