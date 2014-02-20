@@ -50,7 +50,7 @@ SystemeExpert::~SystemeExpert(){
 SystemeExpert::SystemeExpert(const SystemeExpert & source){
    baseRegles=source.baseRegles; // on fais appelle a la surchage de l'operateur = de la classe ListeCirculaire.
    baseFaits=source.baseFaits; // on fais appelle a la surchage de l'operateur = de la classe EnsembleFaits.
-   //baseNouveauxFaits.liste = source.baseNouveauxFaits.liste; // on fais appelle a la surchage de l'operateur = de la classe ListeCirculaire.
+   baseNouveauxFaits = source.baseNouveauxFaits; // on fais appelle a la surchage de l'operateur = de la classe ListeCirculaire.
    // bad_alloc sera retourner par les méthodes de surchage des type plushaut.
 }
 
@@ -72,6 +72,7 @@ SystemeExpert::SystemeExpert(const SystemeExpert & source){
 SystemeExpert & SystemeExpert::operator = (const SystemeExpert & source){
    baseRegles=source.baseRegles; // on fais appelle a la surchage de l'operateur = de la classe ListeCirculaire.
    baseFaits=source.baseFaits; // on fais appelle a la surchage de l'operateur = de la classe EnsembleFaits.
+   baseNouveauxFaits = source.baseNouveauxFaits; // on fais appelle a la surchage de l'operateur = de la classe ListeCirculaire.
    // bad_alloc sera retourner par les méthodes de surchage des type plushaut.
    return (*this);
 }
@@ -299,6 +300,7 @@ ListeCirculaire<Regle> SystemeExpert::chainageAvant(){
 
    for(int i=1; i<=baseRegles.taille() ; i++)// parcours toutes les règles
    {
+      std::cout << "la boucle numero: " << i << std::endl;
       for(int j=1; j<=baseRegles.element(i).GetPremisses()->cardinaliteEnsFaits(); j++)  // parcours toutes les premisses
       {
          TypeFait courant = baseRegles.element(i).GetPremisses()->elementEnsFaits(j); // on donne la valeur courante de type Fait a courant.
@@ -332,18 +334,27 @@ ListeCirculaire<Regle> SystemeExpert::chainageAvant(){
          }
          if(dejaExistante == false){
             baseNouveauxFaits.enfiler(assertion);
+            std::cout << "valeur de VarI avant set: " << i << std::endl;
             baseRegles.element(i).SetUtilisee(true); // on met a jour la regle pour dire quelle a ete utilise.
+            std::cout << "valeur de VarI apres set: " << i << std::endl;
+            std::cout << "la valeur du utilise apres le set: ";
+            std::cout << baseRegles.element(i).GetUtilisee() << std::endl;
          }
       }// fin for qui parcours toutes les elements de premisses.
    }// fin for qui parcours toutes les règles
-
-
    ListeCirculaire<Regle> reglesQuiOntPermis;
-   for(int i=1;i<= baseRegles.taille(); i++)// parcours toutes les regles de baseRegles
+   std::cout << "apres les fors" << std::endl;
+   for(int x=1;x<= baseRegles.taille(); x++)// parcours toutes les regles de baseRegles
    {
-      if(baseRegles.element(i).GetUtilisee()==true)//verifie si regle a ete utiliser
+      std::cout << "ds fort" << std::endl;
+      std::cout << baseRegles.element(x).GetUtilisee() << std::endl;
+
+      if(baseRegles.element(x).GetUtilisee())//verifie si regle a ete utiliser
       {
-         reglesQuiOntPermis.ajouter(baseRegles.element(i),1); // ajoute la regle utiliser dans la liste circulaire reglesQuiOntPermis
+
+         reglesQuiOntPermis.ajouter(baseRegles.element(x),1); // ajoute la regle utiliser dans la liste circulaire reglesQuiOntPermis
+         std::cout << "regle use added " << std::endl;
+
       }//fin if pour savoir si la regle a ete utiliser
    }// fin for qui parcours toutes les regles de baseRegles
 

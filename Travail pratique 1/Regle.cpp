@@ -39,8 +39,6 @@ Regle::Regle(const Regle& source)
 */
 Regle::~Regle()
 {
-   premisses.~EnsembleFaits();
-   conclusions.~EnsembleFaits();
    utilisee = false;
 }
 
