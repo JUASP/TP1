@@ -148,7 +148,7 @@ namespace tp1
 		* 
 		*  \exception  std::range_error si la position est hors borne.
 		*/
-		T element(int) const;
+		T & element(int) const;
 
 		/**                       
 		*  \brief Retourne la position de la première occurence d'un élément donné.

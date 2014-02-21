@@ -336,6 +336,7 @@ ListeCirculaire<Regle> SystemeExpert::chainageAvant(){
          if(dejaExistante == false){
             baseNouveauxFaits.enfiler(assertion);
             reglesQuiOntPermis.ajouter(baseRegles.element(i),1);
+            baseRegles.element(i).SetUtilisee(true);
          }
       }// fin for qui parcours toutes les elements de premisses.
    }// fin for qui parcours toutes les règles

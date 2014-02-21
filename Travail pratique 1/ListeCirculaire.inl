@@ -376,7 +376,7 @@ bool ListeCirculaire<T>::appartient(const T& element) const{
         \return un element de type T
 */
 template <typename T>
-T ListeCirculaire<T>:: element(int pos) const{
+T & ListeCirculaire<T>:: element(int pos) const{
    int i = 1;
    if(dernier == 0) // cas ou la liste est vide
     {
