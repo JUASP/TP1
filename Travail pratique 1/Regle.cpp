@@ -1,7 +1,7 @@
 /**
 * \file Regle.cpp
 * \brief Ce fichier contient une implantation des m�thodes de la classe Regle
-* \author ?
+* \author Julien Aspirot - Felix Brousseau-Tremblay
 * \version 0.1
 * \date f�vrier 2014
 *
